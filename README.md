@@ -1,4 +1,6 @@
 # ConfigAdapter
+[![Build Status](https://carlubian.visualstudio.com/GitHub%20Interop/_apis/build/status/ConfigAdapter%20Build)](https://carlubian.visualstudio.com/GitHub%20Interop/_build/latest?definitionId=15)
+
 Documentation and usage instructions for the ConfigAdapter library.
 
 ## Overview
@@ -49,7 +51,7 @@ In this case, configuration has two global settings, <strong>Language</strong> a
 Note the Format attribute in the configuration. The current version admits XML files with <strong>A</strong> format. If one day nested categories were available, files would have <strong>B</strong> format instead. This prevents the library from opening incompatible files and ruining important settings.
 
 ### JSON Files
-ConfigAdapter can use a variant of the JSON standard called <strong>[HJSON](www.hjson.org)</strong> that happens to be more easily read by humans and offers a less restrictive syntax. Thus, it results a good alternative to use.
+ConfigAdapter can use a variant of the JSON standard called <strong>[HJSON](http://www.hjson.org)</strong> that happens to be more easily read by humans and offers a less restrictive syntax. Thus, it results a good alternative to use.
 
 A JSON configuration file looks like this:
 
