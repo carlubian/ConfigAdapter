@@ -1,0 +1,15 @@
+﻿{
+  Clave1: Valor1
+  Clave2: Valor2
+  Categoria: {
+    Clave3: Valor3
+  }
+  Tipos: {
+    Entero: "1" # Tipo entero
+    Largo: "1"
+    Doble: "1.5"
+    Flotante: "1.5"
+    Caracter: h
+    Booleano: False
+  }
+}

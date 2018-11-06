@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Archivo de configuración de prueba -->
+<Configuration Format="A">
+  <Setting Key="ClaveSinCategoria">0</Setting>
+
+  <Categoria>
+    <Setting Key="SubClave">1</Setting>
+    <!--Comentario original-->
+    <Setting Key="Comentada">True</Setting>
+  </Categoria>
+
+  <Tipos>
+    <!--Tipo entero-->
+    <Setting Key="Entero">1</Setting>
+    <Setting Key="Largo">1</Setting>
+    <Setting Key="Doble">1,5</Setting>
+    <Setting Key="Flotante">1,5</Setting>
+    <Setting Key="Caracter">h</Setting>
+    <Setting Key="Booleano">False</Setting>
+  </Tipos>
+</Configuration>
