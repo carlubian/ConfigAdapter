@@ -2,9 +2,22 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <Id>ConfigAdapter</Id>
+    <Title>ConfigAdapter</Title>
+    <Version>1.1.0</Version>
+    <Authors>carlubian</Authors>
+    <Owners>carlubian</Owners>
+    <Company>carlubian</Company>
+    <PackageReleaseNotes>File transfer and other fixes.</PackageReleaseNotes>
+    <PackageIconUrl>http://carlubian.azurewebsites.net/images/icon-ConfigAdapterV2.png</PackageIconUrl>
+    <Description>ConfigAdapter allows different applications to read and write settings and configurations in a simple and direct way.</Description>
+    <RepositoryUrl>https://www.github.com/carlubian/ConfigAdapter</RepositoryUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageTags>configuration-files, dotnet-standard, dotnet</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNet.Misc.Extensions" Version="1.0.0" />
     <PackageReference Include="Hjson" Version="3.0.0" />
     <PackageReference Include="INIFileParserDotNetCore" Version="2.5.2" />
   </ItemGroup>

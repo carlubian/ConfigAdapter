@@ -8,6 +8,7 @@ using ConfigAdapter.Model;
 using IniParser;
 using IniParser.Model;
 using IniParser.Parser;
+using DotNet.Misc.Extensions.Linq;
 
 namespace ConfigAdapter.Adapters
 {

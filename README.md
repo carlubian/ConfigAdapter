@@ -1,5 +1,7 @@
-# ConfigAdapter
 [![Build Status](https://carlubian.visualstudio.com/GitHub%20Interop/_apis/build/status/ConfigAdapter%20Build)](https://carlubian.visualstudio.com/GitHub%20Interop/_build/latest?definitionId=15)
+<hr/>
+
+![ConfigAdapter](https://carlubian.azurewebsites.net/images/ConfigAdapterV2.png?maxAge=2592000 "ConfigAdapter")
 
 Documentation and usage instructions for the ConfigAdapter library.
 
