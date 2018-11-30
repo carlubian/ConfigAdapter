@@ -18,7 +18,7 @@ namespace ConfigAdapter.Adapters
     {
         private readonly string _file;
         private readonly static string[] _formats = { "A" };
-        private XElement _root;
+        private readonly XElement _root;
 
         public XmlFileAdapter(string file)
         {
@@ -48,14 +48,12 @@ namespace ConfigAdapter.Adapters
             // Global key
             if (parts.Length is 1)
                 return _root.Elements()
-                    .Where(e => e.Attribute("Key")?.Value == parts[0])
-                    .FirstOrDefault()?.Value;
+                    .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[0])?.Value;
             // Local key
             else if (parts.Length is 2)
                 return _root.Elements(parts[0])
                     .SelectMany(cat => cat.Elements("Setting"))
-                    .Where(e => e.Attribute("Key")?.Value == parts[1])
-                    .FirstOrDefault()?.Value;
+                    .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[1])?.Value;
 
             throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
         }

@@ -19,7 +19,7 @@ namespace ConfigAdapter.Adapters
     public class IniFileAdapter : IFileAdapter, ITransferable
     {
         private readonly string _file;
-        private IniData _ini;
+        private readonly IniData _ini;
 
         public IniFileAdapter(string file)
         {
