@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace ConfigAdapter.Adapters
 {
     /// <summary>
@@ -21,5 +23,14 @@ namespace ConfigAdapter.Adapters
         /// <param name="key">Key</param>
         /// <param name="value">Value</param>
         void Write(string key, string value, string comment = null);
+
+        /// <summary>
+        /// Returns all settings present in the
+        /// given section (or the global section
+        /// if the parameter string is empty).
+        /// </summary>
+        /// <param name="section">Section name</param>
+        /// <returns>Settings in the section</returns>
+        IDictionary<string, string> SettingsIn(string section);
     }
 }

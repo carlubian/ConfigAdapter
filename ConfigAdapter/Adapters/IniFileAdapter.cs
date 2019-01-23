@@ -49,6 +49,28 @@ namespace ConfigAdapter.Adapters
             throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
         }
 
+        public IDictionary<string, string> SettingsIn(string section)
+        {
+            var result = new Dictionary<string, string>();
+
+            if (section is "")
+            {
+                // Global settings
+                var elems = _ini.Global;
+                foreach (var kvp in elems)
+                    result.Add(kvp.KeyName, kvp.Value);
+            }
+            else
+            {
+                // Specific settings
+                var elems = _ini[section];
+                foreach (var kvp in elems)
+                    result.Add(kvp.KeyName, kvp.Value);
+            }
+
+            return result;
+        }
+
         public void Write(string key, string value, string comment = null)
         {
             var parts = key.Split(':');

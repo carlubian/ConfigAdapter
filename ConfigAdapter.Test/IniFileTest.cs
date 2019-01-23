@@ -155,5 +155,29 @@ namespace ConfigAdapterTest
 
             act.Should().Throw<InvalidKeyFormatException>();
         }
+
+        [TestMethod]
+        public void TestSettingsInGlobal()
+        {
+            var config = Config.From(@"TestFile.ini");
+            var elems = config.SettingsIn("");
+
+            elems.Should().HaveCountGreaterOrEqualTo(1);
+            elems.Should().ContainKey("ClaveSinCategoria");
+            elems.Should().ContainValue("0");
+            elems.Should().NotContainKeys("SubClave", "Entero");
+        }
+
+        [TestMethod]
+        public void TestSettingsInSection()
+        {
+            var config = Config.From(@"TestFile.ini");
+            var elems = config.SettingsIn("Categoria");
+
+            elems.Should().HaveCountGreaterOrEqualTo(1);
+            elems.Should().ContainKey("SubClave");
+            elems.Should().ContainValue("1");
+            elems.Should().NotContainKeys("ClaveSinCategoria", "Entero");
+        }
     }
 }

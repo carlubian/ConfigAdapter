@@ -141,5 +141,27 @@ namespace ConfigAdapter.Adapters
             foreach (var setting in source)
                 Write(setting.Key, setting.Value, setting.Comment);
         }
+
+        public IDictionary<string, string> SettingsIn(string section)
+        {
+            var result = new Dictionary<string, string>();
+
+            if (section is "")
+            {
+                // Global settings
+                var elems = _content.Where(kvp => kvp.Value.JsonType != JsonType.Object);
+                foreach (var kvp in elems.ToArray())
+                    result.Add(kvp.Key, kvp.Value.Qs());
+            }
+            else
+            {
+                // Specific settings
+                var elems = _content[section];
+                foreach (var kvp in (elems as WscJsonObject).ToArray())
+                    result.Add(kvp.Key, kvp.Value.Qs());
+            }
+
+            return result;
+        }
     }
 }

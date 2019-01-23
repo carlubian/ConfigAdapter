@@ -199,5 +199,29 @@ namespace ConfigAdapter.Adapters
             foreach (var setting in source)
                 Write(setting.Key, setting.Value, setting.Comment);
         }
+
+        public IDictionary<string, string> SettingsIn(string section)
+        {
+            var result = new Dictionary<string, string>();
+
+            if (section is "")
+            {
+                // Global section
+                var elems = _root.Elements()
+                    .Where(e => e.Attribute("Key") != null);
+                foreach (var elem in elems)
+                    result.Add(elem.Attribute("Key")?.Value, elem.Value);
+            }
+            else
+            {
+                // Specific section
+                var elems = _root.Elements(section)
+                    .SelectMany(cat => cat.Elements("Setting"));
+                foreach (var elem in elems)
+                    result.Add(elem.Attribute("Key")?.Value, elem.Value);
+            }
+
+            return result;
+        }
     }
 }

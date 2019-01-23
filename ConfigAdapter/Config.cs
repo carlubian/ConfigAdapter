@@ -4,6 +4,7 @@ using ConfigAdapter.Adapters;
 using ConfigAdapter.Model;
 using System;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace ConfigAdapter
 {
@@ -112,6 +113,17 @@ namespace ConfigAdapter
             _file.Write(key, value.ToString(), comment);
 
             return this;
+        }
+
+        /// <summary>
+        /// Returns all settings inside the specified
+        /// section (or global, if section is an empty string).
+        /// </summary>
+        /// <param name="section">Section name</param>
+        /// <returns>Settings in section</returns>
+        public IDictionary<string, string> SettingsIn(string section)
+        {
+            return _file.SettingsIn(section);
         }
 
         /// <summary>

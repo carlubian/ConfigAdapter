@@ -156,5 +156,29 @@ namespace ConfigAdapterTest
 
             act.Should().Throw<ConversionImpossibleException>();
         }
+
+        [TestMethod]
+        public void TestSettingsInGlobal()
+        {
+            var config = Config.From(@"TestFile.hjson");
+            var elems = config.SettingsIn("");
+
+            elems.Should().HaveCountGreaterOrEqualTo(2);
+            elems.Should().ContainKeys("Clave1", "Clave2");
+            elems.Should().ContainValues("Valor1", "Valor2");
+            elems.Should().NotContainKeys("Clave3", "Largo", "Flotante");
+        }
+
+        [TestMethod]
+        public void TestSettingsInSection()
+        {
+            var config = Config.From(@"TestFile.hjson");
+            var elems = config.SettingsIn("Tipos");
+
+            elems.Should().HaveCountGreaterOrEqualTo(6);
+            elems.Should().ContainKeys("Entero", "Doble", "Booleano");
+            elems.Should().ContainValues("1", "1.5", "False");
+            elems.Should().NotContainKeys("Clave1", "Clave3");
+        }
     }
 }

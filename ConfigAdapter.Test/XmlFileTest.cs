@@ -215,5 +215,35 @@ namespace ConfigAdapterTest
 
             act.Should().Throw<InvalidKeyFormatException>();
         }
+
+        [TestMethod]
+        public void TestSettingsInGlobal()
+        {
+            var config = Config.From(@"TestFile.xml");
+            IDictionary<string, string> settings = null;
+
+            Action act = () => settings = config.SettingsIn("");
+            act.Should().NotThrow();
+
+            settings.Should().HaveCountGreaterOrEqualTo(1);
+            settings.Should().ContainKey("ClaveSinCategoria");
+            settings.Should().ContainValue("0");
+            settings.Should().NotContainKeys("SubClave", "Comentada", "Doble");
+        }
+
+        [TestMethod]
+        public void TestSettingsInSection()
+        {
+            var config = Config.From(@"TestFile.xml");
+            IDictionary<string, string> settings = null;
+
+            Action act = () => settings = config.SettingsIn("Categoria");
+            act.Should().NotThrow();
+
+            settings.Should().HaveCountGreaterOrEqualTo(2);
+            settings.Should().ContainKeys("SubClave", "Comentada");
+            settings.Should().ContainValue("1");
+            settings.Should().NotContainKeys("ClaveSinCategoria", "Doble");
+        }
     }
 }
