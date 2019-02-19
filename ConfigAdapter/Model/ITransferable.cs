@@ -10,7 +10,7 @@ namespace ConfigAdapter.Model
     /// Defines the necessary methods to transfer
     /// settings from one file to another.
     /// </summary>
-    internal interface ITransferable
+    public interface ITransferable
     {
         /// <summary>
         /// Returns a list with all the settings in the file.

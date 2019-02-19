@@ -15,36 +15,9 @@ namespace ConfigAdapter
     {
         private readonly IFileAdapter _file;
 
-        private Config(IFileAdapter file)
+        public Config(IFileAdapter file)
         {
             _file = file;
-        }
-
-        /// <summary>
-        /// Sets the configuration file
-        /// to be opened.
-        /// </summary>
-        /// <param name="file">File path</param>
-        /// <returns>Instance</returns>
-        public static Config From(string file)
-        {
-            var parts = file.Split('.');
-            if (parts.Length < 2)
-                throw new UnknownFileFormatException($"File {file} has an unknown format.");
-
-            switch (parts[parts.Length - 1].ToUpperInvariant())
-            {
-                case "INI":
-                    return new Config(new IniFileAdapter(file));
-                case "XML":
-                    return new Config(new XmlFileAdapter(file));
-                case "HJSON":
-                    return new Config(new JsonFileAdapter(file));
-                case "JSON":
-                    throw new InvalidFileFormatException($"Json files must have .HJSON extension.");
-                default:
-                    throw new InvalidFileFormatException($"File format {parts[parts.Length - 1]} cannot be used.");
-            }
         }
 
         /// <summary>
@@ -130,36 +103,36 @@ namespace ConfigAdapter
         /// Transfers all settings in this file into a new
         /// file, not necessarily in the same format.
         /// </summary>
-        /// <param name="file">Destination file</param>
+        /// <param name="destination">Destination adapter</param>
         /// <returns></returns>
-        public Config TransferTo(string file)
+        public Config TransferTo(ITransferable destination)
         {
-            var parts = file.Split('.');
-            if (parts.Length < 2)
-                throw new UnknownFileFormatException($"File {file} has an unknown format.");
+            var data = (_file as ITransferable).ReadAll();
+            destination.WriteAll(data);
 
-            switch (parts[parts.Length - 1].ToUpperInvariant())
-            {
-                case "INI":
-                    var data = (_file as ITransferable).ReadAll();
-                    var iniAdapter = new IniFileAdapter(file);
-                    (iniAdapter as ITransferable).WriteAll(data);
-                    return new Config(iniAdapter);
-                case "XML":
-                    data = (_file as ITransferable).ReadAll();
-                    var xmlAdapter = new XmlFileAdapter(file);
-                    (xmlAdapter as ITransferable).WriteAll(data);
-                    return new Config(xmlAdapter);
-                case "HJSON":
-                    data = (_file as ITransferable).ReadAll();
-                    var hjsAdapter = new JsonFileAdapter(file);
-                    (hjsAdapter as ITransferable).WriteAll(data);
-                    return new Config(hjsAdapter);
-                case "JSON":
-                    throw new InvalidFileFormatException($"Json files must have .HJSON extension.");
-                default:
-                    throw new InvalidFileFormatException($"File format {parts[parts.Length - 1]} cannot be used.");
-            }
+            return this;
+        }
+
+        /// <summary>
+        /// Transfers all settings in this file into a new
+        /// file, not necessarily in the same format.
+        /// </summary>
+        /// <param name="config">Destination config</param>
+        /// <returns></returns>
+        public Config TransferTo(Config config)
+        {
+            var destination = config._file as ITransferable;
+            return TransferTo(destination);
+        }
+
+        /// <summary>
+        /// Returns this instance of Config as an
+        /// ITransferable to be used in file transfers.
+        /// </summary>
+        /// <returns></returns>
+        public ITransferable AsTransferable()
+        {
+            return _file as ITransferable;
         }
     }
 }

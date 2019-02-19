@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
-using ConfigAdapter;
 using ConfigAdapter.Exceptions;
+using ConfigAdapter.Ini;
 
 namespace ConfigAdapterTest
 {
@@ -14,7 +14,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestOrphanKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
 
             config.Read("ClaveSinCategoria").Should().Be("0");
         }
@@ -22,7 +22,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestCategorizedKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
 
             config.Read("Categoria:SubClave").Should().Be("1");
         }
@@ -30,7 +30,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestInvalidKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
             Action act = () => config.Read("Esta:Clave:Es:Invalida");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -39,7 +39,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNonexistantKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
 
             config.Read("NoExiste:EstaClave").Should().BeNull();
         }
@@ -47,7 +47,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteCategorizedKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
             Action act = () => config.Write("Categoria:OtraClave", "2");
 
             act.Should().NotThrow();
@@ -57,7 +57,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteOrphanKey()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
             Action act = () => config.Write("OtraSinCategoria", "-1");
 
             act.Should().NotThrow();
@@ -67,7 +67,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestModifyKey()
         {
-            var config = Config.From(@"TestFile.ini");
+            var config = IniConfig.From(@"TestFile.ini");
 
             config.Write("Multi:Escritura", 100);
             config.Write("Multi:Escritura", 200);
@@ -78,7 +78,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestReadType()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
 
             // Números enteros
             Action act = () => config.Read<int>("Tipos:Entero");
@@ -114,7 +114,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteType()
         {
-            var config = Config.From("TestFile.ini");
+            var config = IniConfig.From("TestFile.ini");
 
             // Número entero
             Action act = () => config.Write("Escrito:Entero", 2);
@@ -150,7 +150,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteInvalidKey()
         {
-            var config = Config.From(@"TestFile.ini");
+            var config = IniConfig.From(@"TestFile.ini");
             Action act = () => config.Write("Invalid:Key:Name", "Value");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -159,7 +159,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInGlobal()
         {
-            var config = Config.From(@"TestFile.ini");
+            var config = IniConfig.From(@"TestFile.ini");
             var elems = config.SettingsIn("");
 
             elems.Should().HaveCountGreaterOrEqualTo(1);
@@ -171,7 +171,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInSection()
         {
-            var config = Config.From(@"TestFile.ini");
+            var config = IniConfig.From(@"TestFile.ini");
             var elems = config.SettingsIn("Categoria");
 
             elems.Should().HaveCountGreaterOrEqualTo(1);

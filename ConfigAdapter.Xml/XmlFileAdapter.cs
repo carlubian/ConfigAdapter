@@ -7,8 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using DotNet.Misc.Extensions.Linq;
+using ConfigAdapter.Adapters;
 
-namespace ConfigAdapter.Adapters
+namespace ConfigAdapter.Xml
 {
     /// <summary>
     /// Connects to XML
@@ -22,6 +23,9 @@ namespace ConfigAdapter.Adapters
 
         public XmlFileAdapter(string file)
         {
+            if (!file.EndsWith(".xml"))
+                throw new InvalidFileFormatException(".xml file extension required.");
+
             _file = file;
 
             try

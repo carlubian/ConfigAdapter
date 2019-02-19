@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
-using ConfigAdapter;
+using ConfigAdapter.Xml;
 using ConfigAdapter.Exceptions;
 
 namespace ConfigAdapterTest
@@ -14,7 +14,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestOrphanKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
 
             config.Read("ClaveSinCategoria").Should().Be("0");
         }
@@ -22,7 +22,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestCategorizedKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
 
             config.Read("Categoria:SubClave").Should().Be("1");
         }
@@ -30,7 +30,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestInvalidKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
             Action act = () => config.Read("Esta:Clave:Es:Invalida");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -39,7 +39,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNonexistantKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
 
             config.Read("NoExiste:EstaClave").Should().BeNull();
         }
@@ -47,7 +47,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteCategorizedKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
             Action act = () => config.Write("Categoria:OtraClave", "2");
 
             act.Should().NotThrow();
@@ -57,7 +57,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteOrphanKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
             Action act = () => config.Write("OtraSinCategoria", "-1");
 
             act.Should().NotThrow();
@@ -67,7 +67,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteCommentedKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
             Action act = () => config.Write("Categoria:Cosa Compleja", "Foo",
                 "Este ajuste es muy complejo");
 
@@ -78,7 +78,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestReadType()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
 
             // Números enteros
             Action act = () => config.Read<int>("Tipos:Entero");
@@ -114,7 +114,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteType()
         {
-            var config = Config.From("TestFile.xml");
+            var config = XmlConfig.From("TestFile.xml");
 
             // Número entero
             Action act = () => config.Write("Escrito:Entero", 2);
@@ -150,14 +150,14 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWrongFormat()
         {
-            Action act = () => Config.From("WrongFile.xml");
+            Action act = () => XmlConfig.From("WrongFile.xml");
             act.Should().Throw<IncompatibleXmlFormatException>();
         }
 
         [TestMethod]
         public void TestModifyKey()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
 
             config.Write("Multi:Escritura", 100, "Primera escritura");
             config.Write("Multi:Escritura", 200, "Segunda escritura");
@@ -168,10 +168,10 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewPath()
         {
-            Action act = () => Config.From(@"Settings\TestFile.xml");
+            Action act = () => XmlConfig.From(@"Settings\TestFile.xml");
             act.Should().NotThrow();
 
-            var config = Config.From(@"Settings\TestFile.xml");
+            var config = XmlConfig.From(@"Settings\TestFile.xml");
             config.Write("Ajuste:Prueba", "Valor");
 
             config.Read("Ajuste:Prueba").Should().Be("Valor");
@@ -182,7 +182,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestUpdateComment()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             config.Write("Categoria:Comentada", "False", "Nuevo comentario");
 
             config.Write("Comentarios:Primera", "Foo", "Comentario 1");
@@ -192,7 +192,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewGlobalCommented()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             config.Write("GlobalKey", "GlobalValue", "Global Comment");
 
             config.Read("GlobalKey").Should().Be("GlobalValue");
@@ -201,7 +201,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestUpdateGlobal()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             config.Write("GlobalKey", "NewGlobalValue", "Global Comment");
 
             config.Read("GlobalKey").Should().Be("NewGlobalValue");
@@ -210,7 +210,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteInvalidKey()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             Action act = () => config.Write("Invalid:Key:Name", "Value");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -219,7 +219,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInGlobal()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             IDictionary<string, string> settings = null;
 
             Action act = () => settings = config.SettingsIn("");
@@ -234,7 +234,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInSection()
         {
-            var config = Config.From(@"TestFile.xml");
+            var config = XmlConfig.From(@"TestFile.xml");
             IDictionary<string, string> settings = null;
 
             Action act = () => settings = config.SettingsIn("Categoria");

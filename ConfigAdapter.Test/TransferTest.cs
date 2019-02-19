@@ -1,4 +1,6 @@
-﻿using ConfigAdapter;
+﻿using ConfigAdapter.Xml;
+using ConfigAdapter.Ini;
+using ConfigAdapter.HJson;
 using ConfigAdapter.Exceptions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,51 +16,44 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void IniToIniTransfer()
         {
-            var iniCio = Config.From("TestFile.ini");
-            var iniFin = iniCio.TransferTo("CopyFile.ini");
+            var iniCio = IniConfig.From("TestFile.ini");
+            var iniFin = iniCio.TransferTo(IniConfig.From("CopyFile.ini"));
         }
 
         [TestMethod]
         public void XmlToXmlTransfer()
         {
-            var iniCio = Config.From("TestFileOld.xml");
-            var iniFin = iniCio.TransferTo("TestFileNew.xml");
+            var iniCio = XmlConfig.From("TestFileOld.xml");
+            var iniFin = iniCio.TransferTo(XmlConfig.From("TestFileNew.xml"));
         }
 
         [TestMethod]
         public void JsonToJsonTranfer()
         {
-            var iniCio = Config.From("TestFileOld.hjson");
-            var iniFin = iniCio.TransferTo("TestFileNew.hjson");
+            var iniCio = HJsonConfig.From("TestFileOld.hjson");
+            var iniFin = iniCio.TransferTo(HJsonConfig.From("TestFileNew.hjson"));
         }
 
         [TestMethod]
         public void UnknownFileTransfer()
         {
-            var iniCio = Config.From("TestFile.ini");
-            Action act = () => iniCio.TransferTo("Incorrecto");
+            var iniCio = IniConfig.From("TestFile.ini");
+            Action act = () => iniCio.TransferTo(XmlConfig.From("Incorrecto"));
 
-            act.Should().Throw<UnknownFileFormatException>();
+            act.Should().Throw<InvalidFileFormatException>();
         }
 
         [TestMethod]
         public void InvalidFileTransfer()
         {
-            var iniCio = Config.From("TestFile.ini");
-            Action act = () => iniCio.TransferTo("Incorrecto.json");
+            var iniCio = IniConfig.From("TestFile.ini");
+            Action act = () => iniCio.TransferTo(HJsonConfig.From("Incorrecto.json"));
 
             act.Should().Throw<InvalidFileFormatException>();
 
-            act = () => iniCio.TransferTo("Incorrecto.txt");
+            act = () => iniCio.TransferTo(XmlConfig.From("Incorrecto.txt"));
 
             act.Should().Throw<InvalidFileFormatException>();
-        }
-
-        [TestMethod]
-        [TestCategory("SkipWhenLiveUnitTesting")]
-        public void Foobar()
-        {
-            Config.From("VolumenConveyor.hjson").TransferTo("VolumenConveyor.ini");
         }
     }
 }

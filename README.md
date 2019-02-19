@@ -94,21 +94,20 @@ As can be seen, it contains the same settings as the previous examples.
 ## Usage instructions
 ConfigAdapter is compatible with .NET Framework 4.6.1 and .NET Core 2.0
 
-The first step is to add the dependency to ConfigAdapter.dll
+The first step is to add the needed packages. Note that since version 2.0.0, the ConfigAdapter package does not provide any actual file adapter. To do that, use any of the specific packages, such as ConfigAdapter.Xml or ConfigAdapter.Ini.
 
-Besides, the following files must be present in the output folder:
-* INIFileParser.dll
-* HJson.dll
+If you are planning to transfer a file between different formats, you will need both packages imported.
 
-Once done that, simply add the reference to the necessary classes:
+Once done that, simply add the appropiate using reference:
 
-<pre>using ConfigAdapter;</pre>
+<pre>using ConfigAdapter;
+using ConfigAdapter.Xml;</pre>
 
 ### Open a file
 To open a configuration file (or create a new one), use the destination path and pass it to the <strong>From</strong> method:
 
-<pre>var config = Config.From("Settings.xml");
-var config = Config.From(@"..\Config\Settings.xml");
+<pre>var config = XmlConfig.From("Settings.xml");
+var config = XmlConfig.From(@"..\Config\Settings.xml");
 </pre>
 
 ### Read data
@@ -150,7 +149,8 @@ ConfigAdapter can make a copy of a configuration file, even changing the formar,
 
 To do that, use tha .TransferTo() method:
 
-<pre>Config.From("Settings.ini").TransferTo("Settings.xml");</pre>
+<pre>IniConfig.From("Settings.ini")
+    .TransferTo(XmlConfig.From("Settings.xml"));</pre>
 
 ## Other remarks
 This section will include general aspects of the module that must be taken into account when using it.

@@ -10,7 +10,7 @@ namespace ConfigAdapter.Model
     /// Temporarily stores configuration settings
     /// during a transference.
     /// </summary>
-    internal struct Setting
+    public struct Setting
     {
         /// <summary>
         /// Key name, including category if present.

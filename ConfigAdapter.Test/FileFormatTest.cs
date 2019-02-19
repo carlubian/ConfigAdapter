@@ -1,8 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ConfigAdapter;
+using ConfigAdapter.Xml;
 using System;
 using FluentAssertions;
 using ConfigAdapter.Exceptions;
+using ConfigAdapter.Ini;
+using ConfigAdapter.HJson;
 
 namespace ConfigAdapterTest
 {
@@ -12,15 +14,15 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestUnknownFormat()
         {
-            Action act = () => Config.From(@"path\to\invalid\file");
+            Action act = () => XmlConfig.From(@"path\to\invalid\file");
 
-            act.Should().Throw<UnknownFileFormatException>();
+            act.Should().Throw<InvalidFileFormatException>();
         }
 
         [TestMethod]
         public void TestInvalidFormat()
         {
-            Action act = () => Config.From(@"path\to\invalid\format.pdf");
+            Action act = () => XmlConfig.From(@"path\to\invalid\format.pdf");
 
             act.Should().Throw<InvalidFileFormatException>();
         }
@@ -28,7 +30,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestValidFile()
         {
-            Action act = () => Config.From(@"TestFile.ini");
+            Action act = () => IniConfig.From(@"TestFile.ini");
 
             act.Should().NotThrow();
         }
@@ -36,7 +38,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewIniFile()
         {
-            Action act = () => Config.From(@"NewFile.ini");
+            Action act = () => IniConfig.From(@"NewFile.ini");
 
             act.Should().NotThrow();
 
@@ -46,7 +48,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewXmlFile()
         {
-            Action act = () => Config.From(@"NewFile.xml");
+            Action act = () => XmlConfig.From(@"NewFile.xml");
 
             act.Should().NotThrow();
 
@@ -56,7 +58,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewJsonFile()
         {
-            Action act = () => Config.From(@"NewFile.hjson");
+            Action act = () => HJsonConfig.From(@"NewFile.hjson");
 
             act.Should().NotThrow();
 
@@ -66,7 +68,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewDottedFile()
         {
-            Action act = () => Config.From(@"New.File.xml");
+            Action act = () => XmlConfig.From(@"New.File.xml");
 
             act.Should().NotThrow();
 
@@ -76,7 +78,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestInvalidJsonFile()
         {
-            Action act = () => Config.From("TestFile.json");
+            Action act = () => XmlConfig.From("TestFile.json");
 
             act.Should().Throw<InvalidFileFormatException>();
         }

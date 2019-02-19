@@ -2,24 +2,28 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using ConfigAdapter.Adapters;
 using ConfigAdapter.Exceptions;
 using ConfigAdapter.Extensions;
 using ConfigAdapter.Model;
 using Hjson;
 
-namespace ConfigAdapter.Adapters
+namespace ConfigAdapter.HJson
 {
     /// <summary>
     /// Connects to a JSON
     /// configuration file.
     /// </summary>
-    public class JsonFileAdapter : IFileAdapter, ITransferable
+    public class HJsonFileAdapter : IFileAdapter, ITransferable
     {
         private readonly string _file;
         private WscJsonObject _content;
 
-        public JsonFileAdapter(string file)
+        public HJsonFileAdapter(string file)
         {
+            if (!file.EndsWith(".hjson"))
+                throw new InvalidFileFormatException(".hjson file extension required.");
+
             _file = file;
 
             try
@@ -40,15 +44,22 @@ namespace ConfigAdapter.Adapters
         {
             var parts = key.Split(':');
 
-            // Global key
-            if (parts.Length is 1)
+            try
             {
-                return _content[parts[0]];
+                // Global key
+                if (parts.Length is 1)
+                {
+                    return _content[parts[0]];
+                }
+                // Local key
+                else if (parts.Length is 2)
+                {
+                    return _content[parts[0]][parts[1]];
+                }
             }
-            // Local key
-            else if (parts.Length is 2)
+            catch
             {
-                return _content[parts[0]][parts[1]];
+                return null;
             }
             
             throw new InvalidKeyFormatException($"La clave {key} tiene un formato incorrecto.");

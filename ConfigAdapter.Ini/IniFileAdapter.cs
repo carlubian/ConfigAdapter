@@ -9,8 +9,9 @@ using IniParser;
 using IniParser.Model;
 using IniParser.Parser;
 using DotNet.Misc.Extensions.Linq;
+using ConfigAdapter.Adapters;
 
-namespace ConfigAdapter.Adapters
+namespace ConfigAdapter.Ini
 {
     /// <summary>
     /// Connects to INI format
@@ -23,6 +24,9 @@ namespace ConfigAdapter.Adapters
 
         public IniFileAdapter(string file)
         {
+            if (!file.EndsWith(".ini"))
+                throw new InvalidFileFormatException(".ini file extension required.");
+
             _file = file;
 
             try

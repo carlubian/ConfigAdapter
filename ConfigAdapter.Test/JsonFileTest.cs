@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ConfigAdapter;
+using ConfigAdapter.HJson;
 using FluentAssertions;
 using ConfigAdapter.Exceptions;
 
@@ -14,7 +14,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestReadKeys()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             config.Read("Clave1").Should().Be("Valor1");
             config.Read("Clave2").Should().Be("Valor2");
@@ -24,7 +24,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestInvalidKey()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
             Action act = () => config.Read("Esta:Clave:Es:Invalida");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -33,7 +33,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNonexistantKey()
         {
-            var config = Config.From("TestFile.xml");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             config.Read("NoExiste:EstaClave").Should().BeNull();
         }
@@ -41,7 +41,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteOrphanKey()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             config.Write("Clave4", "Valor4");
             config.Write("Clave5", "Valor5", "Comentario de la clave 5");
@@ -50,7 +50,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteCategorizedKey()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             config.Write("Categoria:Clave6", "Valor6");
             config.Write("Categoria:Clave7", "Valor7", "Comentario de la clave 7");
@@ -59,7 +59,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestReadType()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             // Números enteros
             Action act = () => config.Read<int>("Tipos:Entero");
@@ -95,7 +95,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteType()
         {
-            var config = Config.From("TestFile.hjson");
+            var config = HJsonConfig.From("TestFile.hjson");
 
             // Número entero
             Action act = () => config.Write("Escrito:Entero", 2);
@@ -131,7 +131,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestModifyKey()
         {
-            var config = Config.From(@"TestFile.hjson");
+            var config = HJsonConfig.From(@"TestFile.hjson");
 
             config.Write("Escritura", 100, "Primera escritura");
             config.Write("Multi:Escritura", 200, "Segunda escritura");
@@ -142,7 +142,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestWriteInvalidKey()
         {
-            var config = Config.From(@"TestFile.hjson");
+            var config = HJsonConfig.From(@"TestFile.hjson");
             Action act = () => config.Write("Invalid:Key:Name", "Value");
 
             act.Should().Throw<InvalidKeyFormatException>();
@@ -151,7 +151,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestReadInvalidType()
         {
-            var config = Config.From(@"TestFile.hjson");
+            var config = HJsonConfig.From(@"TestFile.hjson");
             Action act = () => config.Read<int>("Clave1");
 
             act.Should().Throw<ConversionImpossibleException>();
@@ -160,7 +160,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInGlobal()
         {
-            var config = Config.From(@"TestFile.hjson");
+            var config = HJsonConfig.From(@"TestFile.hjson");
             var elems = config.SettingsIn("");
 
             elems.Should().HaveCountGreaterOrEqualTo(2);
@@ -172,7 +172,7 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestSettingsInSection()
         {
-            var config = Config.From(@"TestFile.hjson");
+            var config = HJsonConfig.From(@"TestFile.hjson");
             var elems = config.SettingsIn("Tipos");
 
             elems.Should().HaveCountGreaterOrEqualTo(6);

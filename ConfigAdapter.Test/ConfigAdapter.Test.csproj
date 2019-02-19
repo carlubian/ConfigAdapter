@@ -15,7 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConfigAdapter\ConfigAdapter.csproj" />
+    <ProjectReference Include="..\ConfigAdapter.HJson\ConfigAdapter.HJson.csproj" />
+    <ProjectReference Include="..\ConfigAdapter.Ini\ConfigAdapter.Ini.csproj" />
+    <ProjectReference Include="..\ConfigAdapter.Xml\ConfigAdapter.Xml.csproj" />
   </ItemGroup>
 
   <ItemGroup>
