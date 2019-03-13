@@ -97,6 +97,29 @@ namespace ConfigAdapter.Ini
                 throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
         }
 
+        public void DeleteKey(string key)
+        {
+            var parts = key.Split(':');
+
+            // Global Key
+            if (parts.Length is 1)
+            {
+                _ini.Global.RemoveKey(parts[0]);
+            }
+            // Local key
+            else if (parts.Length is 2)
+            {
+                _ini[parts[0]].RemoveKey(parts[1]);
+            }
+            else
+                throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
+        }
+
+        public void DeleteSection(string section)
+        {
+            _ini.Sections.RemoveSection(section);
+        }
+
         IList<Setting> ITransferable.ReadAll()
         {
             var result = new List<Setting>();

@@ -161,6 +161,51 @@ namespace ConfigAdapter.Xml
                 throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
         }
 
+        public void DeleteKey(string key)
+        {
+            var parts = key.Split(':');
+
+            // Global key
+            if (parts.Length is 1)
+            {
+                // Find key
+                var elem = _root.Descendants()
+                    .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[0]);
+
+                if (elem != null)
+                    elem.Remove();
+            }
+            // Local key
+            else if (parts.Length is 2)
+            {
+                // Find category
+                var cat = _root.Descendants()
+                     .FirstOrDefault(n => n.Name == parts[0]);
+
+                if (cat != null)
+                {
+                    // Find key
+                    var elem = cat.Descendants()
+                        .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[1]);
+
+                    if (elem != null)
+                        elem.Remove();
+                }
+            }
+            else
+                throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
+        }
+
+        public void DeleteSection(string section)
+        {
+            // Find category
+            var cat = _root.Descendants()
+                    .FirstOrDefault(n => n.Name == section);
+
+            if (cat != null)
+                cat.Remove();
+        }
+
         IList<Setting> ITransferable.ReadAll()
         {
             var result = new List<Setting>();

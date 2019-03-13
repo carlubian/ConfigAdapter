@@ -25,6 +25,18 @@ namespace ConfigAdapter.Adapters
         void Write(string key, string value, string comment = null);
 
         /// <summary>
+        /// Deletes a key from the settings.
+        /// </summary>
+        /// <param name="key">Key name</param>
+        void DeleteKey(string key);
+
+        /// <summary>
+        /// Deletes a section and all its keys from the settings.
+        /// </summary>
+        /// <param name="section">Section name</param>
+        void DeleteSection(string section);
+
+        /// <summary>
         /// Returns all settings present in the
         /// given section (or the global section
         /// if the parameter string is empty).

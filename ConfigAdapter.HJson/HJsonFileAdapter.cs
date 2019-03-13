@@ -111,6 +111,39 @@ namespace ConfigAdapter.HJson
             });
         }
 
+        public void DeleteKey(string key)
+        {
+            var parts = key.Split(':');
+
+            // Global key
+            if (parts.Length is 1)
+            {
+                _content.Remove(parts[0]);
+            }
+            // Local key
+            else if (parts.Length is 2)
+            {
+                _content[parts[0]].Qo().Remove(parts[1]);
+            }
+            else
+                throw new InvalidKeyFormatException($"La clave {key} tiene un formato incorrecto.");
+
+            HjsonValue.Save(_content, _file, new HjsonOptions
+            {
+                KeepWsc = true
+            });
+        }
+
+        public void DeleteSection(string section)
+        {
+            _content.Remove(section);
+
+            HjsonValue.Save(_content, _file, new HjsonOptions
+            {
+                KeepWsc = true
+            });
+        }
+
         /// <summary>
         /// Update file content to correctly
         /// handle comments.

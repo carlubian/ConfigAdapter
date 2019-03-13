@@ -179,5 +179,47 @@ namespace ConfigAdapterTest
             elems.Should().ContainValue("1");
             elems.Should().NotContainKeys("ClaveSinCategoria", "Entero");
         }
+
+        [TestMethod]
+        public void TestDeleteKey()
+        {
+            var config = IniConfig.From(@"TestFile.ini");
+
+            // Global key
+            config.Write("GlobalKeyToDelete", "ValueToDelete");
+            config.Read("GlobalKeyToDelete").Should().Be("ValueToDelete");
+
+            Action act = () => config.DeleteKey("GlobalKeyToDelete");
+            act.Should().NotThrow();
+
+            config.Read("GlobalKeyToDelete").Should().Be(null);
+
+            // Local key
+            config.Write("Local:KeyToDelete", "ValueToDelete");
+            config.Write("Local:KeyToKeep", "ValueToKeep");
+            config.Read("Local:KeyToDelete").Should().Be("ValueToDelete");
+            config.Read("Local:KeyToKeep").Should().Be("ValueToKeep");
+
+            act = () => config.DeleteKey("Local:KeyToDelete");
+            act.Should().NotThrow();
+
+            config.Read("Local:KeyToDelete").Should().Be(null);
+            config.Read("Local:KeyToKeep").Should().Be("ValueToKeep");
+        }
+
+        [TestMethod]
+        public void TestDeleteSection()
+        {
+            var config = IniConfig.From(@"TestFile.ini");
+
+            config.Write("SectionToDelete:Key1", "Foo");
+            config.Write("SectionToDelete:Key2", "Bar");
+
+            Action act = () => config.DeleteSection("SectionToDelete");
+            act.Should().NotThrow();
+
+            config.Read("SectionToDelete:Key1").Should().Be(null);
+            config.Read("SectionToDelete:Key2").Should().Be(null);
+        }
     }
 }

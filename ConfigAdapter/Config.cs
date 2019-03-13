@@ -88,6 +88,18 @@ namespace ConfigAdapter
             return this;
         }
 
+        public Config DeleteKey(string key)
+        {
+            _file.DeleteKey(key);
+            return this;
+        }
+
+        public Config DeleteSection(string section)
+        {
+            _file.DeleteSection(section);
+            return this;
+        }
+
         /// <summary>
         /// Returns all settings inside the specified
         /// section (or global, if section is an empty string).
