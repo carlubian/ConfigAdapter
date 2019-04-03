@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Advanced example of ConfigAdapter</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/selawik" type="text/css" />
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/muli" type="text/css" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/mdb.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="Index.html">ConfigAdapter</a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="mainNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="Features.html">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Reference.html">Docs &amp; Reference</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Download.html">Download</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <!-- Encabezado -->
+<div class="jumbotron jumbotron-fluid special-color">
+    <div class="row justify-content-center container-fluid">
+        <div class="col-sm-8">
+
+            <h2 class="white-text">Advanced example</h2>
+            <p class="lead white-text">
+                This tutorial explains advanced functionality, such as setting transfer,
+                category managing, and LINQ enumerating.
+            </p>
+            <hr class="my-4">
+
+            <a class="btn btn-primary btn-lg" href="Reference.html" role="button">Go back</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- Panel de contenido claro -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="row justify-content-center mx-5">
+                    <h2>Delete settings</h2>
+                </div>
+                <div class="row justify-content-center mx-5">
+                    <p class="lead"><i class="fas fa-music"></i>When I delete you maybe I'll stop feeling so bad<i class="fas fa-music"></i></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <p>
+                Individual settings can be deleted using the <strong><span class="indigo-text">
+                           .DeleteKey()</span></strong> method, passing the key of a setting.
+                If the setting doesn't exist, this call will do nothing.
+            </p>
+            <script src="https://gist.github.com/carlubian/537357ec0ddcc9189d6deb554fa63651.js"></script>
+            <p>
+                You can also delete entire categories in a single call, using the <strong>
+                    <span class="indigo-text">
+                        .DeleteSection()
+                    </span>
+                </strong> method. In this case, pass the name of a category as a parameter:
+            </p>
+            <script src="https://gist.github.com/carlubian/76885a92cd07a85035a553b5cd65ff1a.js"></script>
+
+        </div>
+    </div>
+
+    <!-- Panel de contenido claro -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="row justify-content-center mx-5">
+                    <h2>Transfer settings</h2>
+                </div>
+                <div class="row justify-content-center mx-5">
+                    <p class="lead">Settings can be transferred from one file to another.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <p>
+                This process generates a copy of all settings in the source file, leaving
+                it untouched. This is useful to create backups, for example.
+            </p>
+            <p>
+                To do so, use the <strong><span class="indigo-text">.TransferTo()</span></strong>
+                method, passing another config instance:
+            </p>
+            <script src="https://gist.github.com/carlubian/79b6f2494ce8a88b41ad174848f026a3.js"></script>
+            <p>
+                Note that you can even transfer between different file formats while keeping all data,
+                including comments.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Panel de contenido claro -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="row justify-content-center mx-5">
+                    <h2>Accio LINQ!</h2>
+                </div>
+                <div class="row justify-content-center mx-5">
+                    <p class="lead">Time to cast some magic.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <p>
+                There are two main ways to obtain enumerables from a settings file:
+            </p>
+            <p>
+                Call <strong><span class="indigo-text">.SettingsIn()</span></strong> to
+                receive an instance of IDictionary&lt;string, string&gt; with all settings
+                inside the specified section.
+            </p>
+            <p>
+                Or call <strong><span class="indigo-text">.AsTransferable().ReadAll()</span></strong>
+                to receive an instance of IEnumerable&lt;Setting&gt; with all settings
+                in the file.
+            </p>
+            <script src="https://gist.github.com/carlubian/b3a42050d0cc3d0d64ecbf3223008ad6.js"></script>
+
+        </div>
+    </div>
+
+    <!-- Panel de contenido oscuro -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <div class="jumbotron jumbotron-fluid blue darken-3">
+                <div class="row justify-content-center mx-5">
+                    <h2 class="white-text">You're all done!</h2>
+                </div>
+                <div class="row justify-content-center mx-5">
+                    <p class="lead white-text">
+                        Now you know how to get the most value out of ConfigAdapter.
+                    </p>
+                    <hr class="my-4">
+
+                    <a class="btn btn-elegant btn-lg" href="Reference.html" role="button">Go back</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small elegant-color">
+
+        <div class="footer-copyright text-center py-3">
+            Hello from Spain!
+        </div>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/mdb.js"></script>
+
+</body>
+
+</html>
+
