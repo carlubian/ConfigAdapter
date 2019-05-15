@@ -287,5 +287,14 @@ namespace ConfigAdapterTest
             config.Read("SectionToDelete:Key1").Should().Be(null);
             config.Read("SectionToDelete:Key2").Should().Be(null);
         }
+
+        [TestMethod]
+        public void TestIndexAccess()
+        {
+            var config = XmlConfig.From(@"TestFile.xml");
+
+            config["SettingIndex"] = "100";
+            config["SettingIndex"].Should().Be("100");
+        }
     }
 }

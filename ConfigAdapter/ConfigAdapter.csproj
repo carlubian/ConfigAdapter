@@ -4,11 +4,11 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Id>ConfigAdapter</Id>
     <Title>ConfigAdapter</Title>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>carlubian</Authors>
     <Owners>carlubian</Owners>
     <Company>carlubian</Company>
-    <PackageReleaseNotes>Implement key and section removal.</PackageReleaseNotes>
+    <PackageReleaseNotes>Implement index access to settings.</PackageReleaseNotes>
     <PackageIconUrl>http://carlubian.azurewebsites.net/images/icon-ConfigAdapterV2.png</PackageIconUrl>
     <Description>ConfigAdapter allows different applications to read and write settings and configurations in a simple and direct way.</Description>
     <RepositoryUrl>https://www.github.com/carlubian/ConfigAdapter</RepositoryUrl>

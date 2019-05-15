@@ -222,5 +222,14 @@ namespace ConfigAdapterTest
             config.Read("SectionToDelete:Key1").Should().Be(null);
             config.Read("SectionToDelete:Key2").Should().Be(null);
         }
+
+        [TestMethod]
+        public void TestIndexAccess()
+        {
+            var config = HJsonConfig.From(@"TestFile.hjson");
+
+            config["SettingIndex"] = "100";
+            config["SettingIndex"].Should().Be("100");
+        }
     }
 }

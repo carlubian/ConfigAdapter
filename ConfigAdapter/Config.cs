@@ -21,6 +21,18 @@ namespace ConfigAdapter
         }
 
         /// <summary>
+        /// Gets or sets a string setting in
+        /// this configuration file.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string this [string key]
+        {
+            get => this.Read(key);
+            set => this.Write(key, value);
+        }
+
+        /// <summary>
         /// Returns the value assigned to a
         /// key (or null if missing).
         /// </summary>

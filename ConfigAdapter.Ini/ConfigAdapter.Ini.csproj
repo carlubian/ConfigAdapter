@@ -4,11 +4,11 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Id>ConfigAdapter.Ini</Id>
     <Title>ConfigAdapter.Ini</Title>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>carlubian</Authors>
     <Owners>carlubian</Owners>
     <Company>carlubian</Company>
-    <PackageReleaseNotes>Implement key and section removal.</PackageReleaseNotes>
+    <PackageReleaseNotes>Implement index access to settings.</PackageReleaseNotes>
     <PackageIconUrl>http://carlubian.azurewebsites.net/images/icon-ConfigAdapterV2.png</PackageIconUrl>
     <Description>Provides an adapter to use .INI files in ConfigAdapter.</Description>
     <RepositoryUrl>https://www.github.com/carlubian/ConfigAdapter</RepositoryUrl>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConfigAdapter" Version="2.1.0" />
+    <PackageReference Include="ConfigAdapter" Version="2.2.0" />
     <PackageReference Include="INIFileParserDotNetCore" Version="2.5.2" />
   </ItemGroup>
 
