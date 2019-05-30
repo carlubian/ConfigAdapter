@@ -6,6 +6,7 @@ using System;
 using System.Globalization;
 using System.Collections.Generic;
 
+[assembly: CLSCompliant(true)]
 namespace ConfigAdapter
 {
     /// <summary>

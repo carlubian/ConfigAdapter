@@ -1,5 +1,6 @@
 ﻿using System;
 
+[assembly: CLSCompliant(true)]
 namespace ConfigAdapter.Ini
 {
     public static class IniConfig

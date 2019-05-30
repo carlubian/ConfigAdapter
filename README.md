@@ -1,4 +1,5 @@
 [![Build Status](https://carlubian.visualstudio.com/GitHub%20Interop/_apis/build/status/ConfigAdapter%20Build)](https://carlubian.visualstudio.com/GitHub%20Interop/_build/latest?definitionId=15)
+[![CodeFactor](https://www.codefactor.io/repository/github/carlubian/configadapter/badge)](https://www.codefactor.io/repository/github/carlubian/configadapter)
 <hr/>
 
 ![ConfigAdapter](https://carlubian.azurewebsites.net/images/ConfigAdapterV2.png?maxAge=2592000 "ConfigAdapter")

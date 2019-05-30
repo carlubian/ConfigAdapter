@@ -1,5 +1,6 @@
 ﻿using System;
 
+[assembly: CLSCompliant(true)]
 namespace ConfigAdapter.HJson
 {
     public static class HJsonConfig

@@ -92,7 +92,13 @@
                            .DeleteKey()</span></strong> method, passing the key of a setting.
                 If the setting doesn't exist, this call will do nothing.
             </p>
-            <script src="https://gist.github.com/carlubian/537357ec0ddcc9189d6deb554fa63651.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+// Delete a global setting
+config.DeleteKey("Timespan");
+
+// Delete a categorized setting
+config.DeleteKey("User1:Token");</pre>
             <p>
                 You can also delete entire categories in a single call, using the <strong>
                     <span class="indigo-text">
@@ -100,7 +106,17 @@
                     </span>
                 </strong> method. In this case, pass the name of a category as a parameter:
             </p>
-            <script src="https://gist.github.com/carlubian/76885a92cd07a85035a553b5cd65ff1a.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+config.Write("User:Name", "Foo");
+config.Write("User:Age", 18);
+config.Write("ServerPort", 80);
+
+// Delete the User category
+config.DeleteSection("User");
+
+// Both User:Name and User:Age are deleted
+// ServerPort isn't part of the User category, so it remains unaffected</pre>
 
         </div>
     </div>
@@ -133,7 +149,13 @@
                 To do so, use the <strong><span class="indigo-text">.TransferTo()</span></strong>
                 method, passing another config instance:
             </p>
-            <script src="https://gist.github.com/carlubian/79b6f2494ce8a88b41ad174848f026a3.js"></script>
+            <pre class="prettyprint lang-cs">var config = XmlConfig.From("source.xml");
+
+// Transfer to another XML file
+config.TransferTo(XmlConfig.From("target.xml"));
+
+// Transfer to a different file format
+config.TransferTo(IniConfig.From("target.ini"));</pre>
             <p>
                 Note that you can even transfer between different file formats while keeping all data,
                 including comments.
@@ -175,7 +197,19 @@
                 to receive an instance of IEnumerable&lt;Setting&gt; with all settings
                 in the file.
             </p>
-            <script src="https://gist.github.com/carlubian/b3a42050d0cc3d0d64ecbf3223008ad6.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+// Operate on the settings of a category
+var settings = config.SettingsIn("User");
+var result = settings.Where(kvp => kvp.Key.Length > 2)
+                        .Select(kvp => kvp.Value);
+                        
+// Operate on all settings in the file
+var settings = config.AsTransferable().ReadAll();
+var result = settings.Where(s => s.Key is "Age")
+                        .OrderBy(n => n)
+                        .Select(s => int.Parse(s.Value))
+                        .Distinct();</pre>
 
         </div>
     </div>
@@ -215,6 +249,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/mdb.js"></script>

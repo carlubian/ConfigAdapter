@@ -1,5 +1,6 @@
 ﻿using System;
 
+[assembly: CLSCompliant(true)]
 namespace ConfigAdapter.Xml
 {
     public static class XmlConfig

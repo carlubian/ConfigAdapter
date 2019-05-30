@@ -97,7 +97,14 @@
                 To open or create a configuration file, use the <strong><span class="indigo-text">
                              .From()</span></strong> method on one of the Config classes, like so:
             </p>
-            <script src="https://gist.github.com/carlubian/25a5800b439ae88be46d1b75ddde7b3f.js"></script>
+            <pre class="prettyprint lang-cs">// Use XML file
+var config = XmlConfig.From("settings.xml");
+
+// Use INI file
+var config = IniConfig.From("settings.ini");
+
+// Use HJSON file
+var config = HJsonConfig.From("settings.hjson");</pre>
             <p>
                 Note that specifying the file extension is required.
             </p>
@@ -146,7 +153,21 @@
                 The Write method also has a generic overload that allows to write struct values
                 directly, such as primitive types.
             </p>
-            <script src="https://gist.github.com/carlubian/e3be0377e398b613c5ada71213bc92b0.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+// Write a string setting
+config.Write("MySetting", "Hello, World!");
+
+// Include a comment
+config.Write("Continent", "Europe", "This contains a continent");
+
+// Write primitive types
+config.Write&lt;int&gt;("Age", 21);
+config.Write&lt;bool&gt;("Validated", true);
+
+// With type inference, the generic type can be skipped
+config.Write("Age", 21);
+config.Write("Validated", true);</pre>
             <p>
                 If you attempt to write a setting with a key that corresponds to an already
                 existing setting in the file, the new value will overwrite the existing one.
@@ -217,7 +238,14 @@
                 throw an exception if the setting is missing or has an incompatible type, so
                 it's inherently less safe than the regular overload.
             </p>
-            <script src="https://gist.github.com/carlubian/3d419c0ee1b519a1fc677d137f47ffc6.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+// Read a string value
+string value = config.Read("Message");
+
+// Read a primitive type. Watch the exceptions!
+int age = config.Read&lt;int&gt;("UserAge");
+double rate = config.Read&lt;double&gt;("DollarConversionRate");</pre>
 
         </div>
     </div>
@@ -254,7 +282,15 @@
                 Category support in ConfigAdapter is straightforward. Simply prepend the category
                 name to the setting key separated by a colon, like this:
             </p>
-            <script src="https://gist.github.com/carlubian/7db4f393d13fccc3dd171ea180812c89.js"></script>
+            <pre class="prettyprint lang-cs">var config; // Assume initialized
+
+// Write categorized settings
+config.Write("User1:Name", "Foo");
+config.Write("User2:Name", "Bar"); // Different settings with the same key
+
+// Read categorized settings
+var name1 = config.Read("User1:Name"); // name1 is Foo
+var name2 = config.Read("User2:Name"); // name2 is Bar</pre>
 
         </div>
     </div>
@@ -295,6 +331,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/mdb.js"></script>
