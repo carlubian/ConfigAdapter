@@ -11,13 +11,12 @@
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/selawik" type="text/css" />
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/muli" type="text/css" />
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/mdb.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/flushing.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="future-3 grey-3-text">
 
-    <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
+    <nav class="navbar navbar-expand-lg navbar-dark grey-4">
         <!-- Navbar brand -->
         <a class="navbar-brand" href="Index.html">ConfigAdapter</a>
 
@@ -49,48 +48,45 @@
     </nav>
 
     <!-- Encabezado -->
-<div class="jumbotron jumbotron-fluid special-color">
+<div class="jumbotron jumbotron-fluid grey-3">
     <div class="row justify-content-center container-fluid">
         <div class="col-sm-8">
 
-            <h2 class="white-text">Advanced example</h2>
-            <p class="lead white-text">
+            <h2 class="future-3-text">Advanced example</h2>
+            <p class="lead future-3-text">
                 This tutorial explains advanced functionality, such as setting transfer,
                 category managing, and LINQ enumerating.
             </p>
             <hr class="my-4">
 
-            <a class="btn btn-primary btn-lg" href="Reference.html" role="button">Go back</a>
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
 
+        </div>
+    </div>
+</div>
+
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <h2>Delete settings</h2>
+            <p class="card-text subtitle">
+                <i class="fas fa-music blue-3-text"></i>When I delete you maybe I'll
+                stop feeling so bad<i class="fas fa-music blue-3-text"></i>
+            </p>
         </div>
     </div>
 </div>
 
 <div class="container-fluid">
 
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
-        <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>Delete settings</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead"><i class="fas fa-music"></i>When I delete you maybe I'll stop feeling so bad<i class="fas fa-music"></i></p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
         <div class="col-sm-8">
 
             <p>
-                Individual settings can be deleted using the <strong><span class="indigo-text">
-                           .DeleteKey()</span></strong> method, passing the key of a setting.
+                Individual settings can be deleted using the <span class="emphasis blue-3-text">
+                           .DeleteKey()</span> method, passing the key of a setting.
                 If the setting doesn't exist, this call will do nothing.
             </p>
             <pre class="prettyprint lang-cs">var config; // Assume initialized
@@ -101,11 +97,10 @@ config.DeleteKey("Timespan");
 // Delete a categorized setting
 config.DeleteKey("User1:Token");</pre>
             <p>
-                You can also delete entire categories in a single call, using the <strong>
-                    <span class="indigo-text">
+                You can also delete entire categories in a single call, using the
+                    <span class="emphasis blue-3-text">
                         .DeleteSection()
-                    </span>
-                </strong> method. In this case, pass the name of a category as a parameter:
+                    </span> method. In this case, pass the name of a category as a parameter:
             </p>
             <pre class="prettyprint lang-cs">var config; // Assume initialized
 
@@ -121,22 +116,21 @@ config.DeleteSection("User");
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>Transfer settings</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">Settings can be transferred from one file to another.</p>
-                </div>
-            </div>
-
+            <h2>Transfer settings</h2>
+            <p class="card-text subtitle">
+                Settings can be transferred from one file to another.
+            </p>
         </div>
     </div>
+</div>
+
+<div class="container-fluent">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
@@ -147,7 +141,7 @@ config.DeleteSection("User");
                 it untouched. This is useful to create backups, for example.
             </p>
             <p>
-                To do so, use the <strong><span class="indigo-text">.TransferTo()</span></strong>
+                To do so, use the <span class="emphasis blue-3-text">.TransferTo()</span>
                 method, passing another config instance:
             </p>
             <pre class="prettyprint lang-cs">var config = XmlConfig.From("source.xml");
@@ -164,22 +158,21 @@ config.TransferTo(IniConfig.From("target.ini"));</pre>
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>Accio LINQ!</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">Time to cast some magic.</p>
-                </div>
-            </div>
-
+            <h2>Accio LINQ!</h2>
+            <p class="card-text subtitle">
+                Time to cast some magic.
+            </p>
         </div>
     </div>
+</div>
+
+<div class="container-flluent">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
@@ -189,12 +182,12 @@ config.TransferTo(IniConfig.From("target.ini"));</pre>
                 There are two main ways to obtain enumerables from a settings file:
             </p>
             <p>
-                Call <strong><span class="indigo-text">.SettingsIn()</span></strong> to
+                Call <span class="emphasis blue-3-text">.SettingsIn()</span> to
                 receive an instance of IDictionary&lt;string, string&gt; with all settings
                 inside the specified section.
             </p>
             <p>
-                Or call <strong><span class="indigo-text">.AsTransferable().ReadAll()</span></strong>
+                Or call <span class="emphasis blue-3-text">.AsTransferable().ReadAll()</span>
                 to receive an instance of IEnumerable&lt;Setting&gt; with all settings
                 in the file.
             </p>
@@ -214,34 +207,26 @@ var result = settings.Where(s => s.Key is "Age")
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido oscuro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido oscuro -->
+<div class="jumbotron jumbotron-fluid grey-3 my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid blue darken-3">
-                <div class="row justify-content-center mx-5">
-                    <h2 class="white-text">You're all done!</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead white-text">
-                        Now you know how to get the most value out of ConfigAdapter.
-                    </p>
-                    <hr class="my-4">
-
-                    <a class="btn btn-elegant btn-lg" href="Reference.html" role="button">Go back</a>
-                </div>
-            </div>
-
+            <h2 class="future-3-text">You're all done!</h2>
+            <p class="card-text future-3-text">
+                Now you know how to get the most value out of ConfigAdapter.
+            </p>
+            <hr class="my-4">
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
         </div>
     </div>
-
 </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small elegant-color">
+    <footer class="page-footer font-small grey-4">
 
-        <div class="footer-copyright text-center py-3">
+        <div class="footer-copyright text-center future-3-text py-3">
             Hello from Spain!
         </div>
 

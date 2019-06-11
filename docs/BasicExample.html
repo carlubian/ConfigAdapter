@@ -11,13 +11,12 @@
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/selawik" type="text/css" />
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/muli" type="text/css" />
     <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/mdb.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/flushing.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="future-3 grey-3-text">
 
-    <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
+    <nav class="navbar navbar-expand-lg navbar-dark grey-4">
         <!-- Navbar brand -->
         <a class="navbar-brand" href="Index.html">ConfigAdapter</a>
 
@@ -49,40 +48,36 @@
     </nav>
 
     <!-- Encabezado -->
-<div class="jumbotron jumbotron-fluid special-color">
+<div class="jumbotron jumbotron-fluid grey-3">
     <div class="row justify-content-center container-fluid">
         <div class="col-sm-8">
 
-            <h2 class="white-text">Basic example</h2>
-            <p class="lead white-text">
+            <h2 class="future-3-text">Basic example</h2>
+            <p class="lead future-3-text">
                 This tutorial will show you how to create a configuration file,
                 store a setting, and read it back.
             </p>
             <hr class="my-4">
 
-            <a class="btn btn-primary btn-lg" href="Reference.html" role="button">Go back</a>
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
 
         </div>
     </div>
 </div>
 
-<div class="container-fluid">
-
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>First Steps</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">Get a first look at using ConfigAdapter.</p>
-                </div>
-            </div>
-
+            <h2>First Steps</h2>
+            <p class="card-text subtitle">
+                Get a first look at using ConfigAdapter.
+            </p>
         </div>
     </div>
+</div>
+
+<div class="container-fluid">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
@@ -95,8 +90,8 @@
                 is mostly cosmetic.
             </p>
             <p>
-                To open or create a configuration file, use the <strong><span class="indigo-text">
-                             .From()</span></strong> method on one of the Config classes, like so:
+                To open or create a configuration file, use the <span class="emphasis blue-3-text">
+                             .From()</span> method on one of the Config classes, like so:
             </p>
             <pre class="prettyprint lang-cs">// Use XML file
 var config = XmlConfig.From("settings.xml");
@@ -116,30 +111,29 @@ var config = HJsonConfig.From("settings.hjson");</pre>
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>A setting worth saving</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">Let's see now how to save data to the config file.</p>
-                </div>
-            </div>
-
+            <h2>A setting worth saving</h2>
+            <p class="card-text subtitle">
+                Let's see now hot to save data to the config file.
+            </p>
         </div>
     </div>
+</div>
+
+<div class="container-fluid">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
         <div class="col-sm-8">
 
             <p>
-                To write a setting to a config instance, use the <strong><span class="indigo-text">
-                              .Write()</span></strong> method. This method takes three parameters:
+                To write a setting to a config instance, use the <span class="emphasis blue-3-text">
+                              .Write()</span> method. This method takes three parameters:
             </p>
             <ul>
                 <li>Key: Used to identify the setting. It shouldn't have spaces or special
@@ -176,61 +170,65 @@ config.Write("Validated", true);</pre>
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido oscuro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido oscuro -->
+<div class="jumbotron jumbotron-fluid grey-3 my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid amber darken-2">
-                <div class="row justify-content-center mx-5">
-                    <h2 class="white-text">Illegal characters</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead white-text">Please avoid using these characters when writing
-                    to a settings file.</p>
-                </div>
-            </div>
-
+            <h2 class="future-3-text">Illegal characters</h2>
+            <p class="card-text future-3-text">
+                Please avoid using these characters when writing
+                to a settings file.
+            </p>
         </div>
     </div>
+</div>
 
-    <!-- Texto de la sección -->
-    <div class="row justify-content-center mt-5">
-        <div class="col-sm-8">
-
-            <ul>
-                <li>Colon (<strong><span class="indigo-text">:</span></strong>)</li>
-                <li>Semicolon (<strong><span class="indigo-text">;</span></strong>)</li>
-                <li>Angle brackets (<strong><span class="indigo-text">&lt; &gt;</span></strong>)</li>
-                <li>Number sign (<strong><span class="indigo-text">#</span></strong>)</li>
-            </ul>
-
-        </div>
-    </div>
-
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
-        <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>Reading is important</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">Now let's read the saved settings.</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
+<div class="container-fluent">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
         <div class="col-sm-8">
 
             <p>
-                To read an existing setting, use the <strong><span class="indigo-text">
-                           .Read()</span></strong> method. It takes a setting key,
+                Depending on the file format being used, some of these
+                characters are part of the syntax. For maximum portability,
+                try to avoid using any of them, no matter what type of file
+                you're writing to:
+            </p>
+            <ul>
+                <li>Colon (<span class="emphasis blue-3-text">:</span>)</li>
+                <li>Semicolon (<span class="emphasis blue-3-text">;</span>)</li>
+                <li>Angle brackets (<span class="emphasis blue-3-text">&lt; &gt;</span>)</li>
+                <li>Number sign (<span class="emphasis blue-3-text">#</span>)</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <h2>Reading is important</h2>
+            <p class="card-text subtitle">
+                Now let's read the saved settings.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluent">
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <p>
+                To read an existing setting, use the <span class="emphasis blue-3-text">
+                           .Read()</span> method. It takes a setting key,
                 and returns the value if it exists. Otherwise, it returns an empty string.
             </p>
             <p>
@@ -250,22 +248,21 @@ double rate = config.Read&lt;double&gt;("DollarConversionRate");</pre>
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido claro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid">
-                <div class="row justify-content-center mx-5">
-                    <h2>Organize settings</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead">It can be useful to categorize settings in a file.</p>
-                </div>
-            </div>
-
+            <h2>Organize settings</h2>
+            <p class="card-text subtitle">
+                It can be useful to categorize settings within a file.
+            </p>
         </div>
     </div>
+</div>
+
+<div class="container-fluent">
 
     <!-- Texto de la sección -->
     <div class="row justify-content-center mt-5">
@@ -295,35 +292,27 @@ var name2 = config.Read("User2:Name"); // name2 is Bar</pre>
 
         </div>
     </div>
+</div>
 
-    <!-- Panel de contenido oscuro -->
-    <div class="row justify-content-center mt-5">
+<!-- Panel de contenido oscuro -->
+<div class="jumbotron jumbotron-fluid grey-3 my-5">
+    <div class="row justify-content-center">
         <div class="col-sm-8">
-
-            <div class="jumbotron jumbotron-fluid blue darken-3">
-                <div class="row justify-content-center mx-5">
-                    <h2 class="white-text">You're all done!</h2>
-                </div>
-                <div class="row justify-content-center mx-5">
-                    <p class="lead white-text">
-                        Now you should be able to use ConfigAdapter to persist
-                        settings in your apps.
-                    </p>
-                    <hr class="my-4">
-
-                    <a class="btn btn-elegant btn-lg" href="Reference.html" role="button">Go back</a>
-                </div>
-            </div>
-
+            <h2 class="future-3-text">You're all done!</h2>
+            <p class="card-text future-3-text">
+                Now you should be able to use ConfigAdapter to persist
+                settings in your apps.
+            </p>
+            <hr class="my-4">
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
         </div>
     </div>
-
 </div>
 
     <!-- Footer -->
-    <footer class="page-footer font-small elegant-color">
+    <footer class="page-footer font-small grey-4">
 
-        <div class="footer-copyright text-center py-3">
+        <div class="footer-copyright text-center future-3-text py-3">
             Hello from Spain!
         </div>
 
