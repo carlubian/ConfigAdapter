@@ -20,9 +20,25 @@ namespace ConfigAdapterTest
         }
 
         [TestMethod]
+        public void TestOrphanKeyNewFormat()
+        {
+            var config = XmlConfig.From("TestNewFormat.xml");
+
+            config.Read("ClaveSinCategoria").Should().Be("0");
+        }
+
+        [TestMethod]
         public void TestCategorizedKey()
         {
             var config = XmlConfig.From("TestFile.xml");
+
+            config.Read("Categoria:SubClave").Should().Be("1");
+        }
+
+        [TestMethod]
+        public void TestCategorizedKeyNewFormat()
+        {
+            var config = XmlConfig.From("TestNewFormat.xml");
 
             config.Read("Categoria:SubClave").Should().Be("1");
         }
@@ -45,6 +61,14 @@ namespace ConfigAdapterTest
         }
 
         [TestMethod]
+        public void TestNonexistantKeyNewFormat()
+        {
+            var config = XmlConfig.From("TestNewFormat.xml");
+
+            config.Read("NoExiste:EstaClave").Should().BeNull();
+        }
+
+        [TestMethod]
         public void TestWriteCategorizedKey()
         {
             var config = XmlConfig.From("TestFile.xml");
@@ -55,9 +79,29 @@ namespace ConfigAdapterTest
         }
 
         [TestMethod]
+        public void TestWriteCategorizedKeyNewFormat()
+        {
+            var config = XmlConfig.From("TestNewFormat.xml");
+            Action act = () => config.Write("Categoria:OtraClave", "2");
+
+            act.Should().NotThrow();
+            config.Read("Categoria:OtraClave").Should().Be("2");
+        }
+
+        [TestMethod]
         public void TestWriteOrphanKey()
         {
             var config = XmlConfig.From("TestFile.xml");
+            Action act = () => config.Write("OtraSinCategoria", "-1");
+
+            act.Should().NotThrow();
+            config.Read("OtraSinCategoria").Should().Be("-1");
+        }
+
+        [TestMethod]
+        public void TestWriteOrphanKeyNewFormat()
+        {
+            var config = XmlConfig.From("TestNewFormat.xml");
             Action act = () => config.Write("OtraSinCategoria", "-1");
 
             act.Should().NotThrow();

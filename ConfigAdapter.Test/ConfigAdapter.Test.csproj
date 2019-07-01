@@ -25,6 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestNewFormat.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestFile.hjson">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
