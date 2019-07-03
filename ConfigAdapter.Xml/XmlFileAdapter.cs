@@ -282,35 +282,73 @@ namespace ConfigAdapter.Xml
         {
             var parts = key.Split(':');
 
-            // Global key
-            if (parts.Length is 1)
+            if (_thisFormat is "A")
             {
-                // Find key
-                var elem = _root.Descendants()
-                    .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[0]);
-
-                if (elem != null)
-                    elem.Remove();
-            }
-            // Local key
-            else if (parts.Length is 2)
-            {
-                // Find category
-                var cat = _root.Descendants()
-                     .FirstOrDefault(n => n.Name == parts[0]);
-
-                if (cat != null)
+                // Global key
+                if (parts.Length is 1)
                 {
                     // Find key
-                    var elem = cat.Descendants()
-                        .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[1]);
+                    var elem = _root.Descendants()
+                        .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[0]);
 
                     if (elem != null)
                         elem.Remove();
                 }
+                // Local key
+                else if (parts.Length is 2)
+                {
+                    // Find category
+                    var cat = _root.Descendants()
+                         .FirstOrDefault(n => n.Name == parts[0]);
+
+                    if (cat != null)
+                    {
+                        // Find key
+                        var elem = cat.Descendants()
+                            .FirstOrDefault(e => e.Attribute("Key")?.Value == parts[1]);
+
+                        if (elem != null)
+                            elem.Remove();
+                    }
+                }
+                else
+                    throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
+            }
+            else if (_thisFormat is "CAv2")
+            {
+                // Global key
+                if (parts.Length is 1)
+                {
+                    // Find key
+                    var elem = _root.Descendants()
+                        .FirstOrDefault(e => e.Name == parts[0]);
+
+                    if (elem != null)
+                        elem.Remove();
+                }
+                // Local key
+                else if (parts.Length is 2)
+                {
+                    // Find category
+                    var cat = _root.Descendants()
+                         .FirstOrDefault(n => n.Name == parts[0]);
+
+                    if (cat != null)
+                    {
+                        // Find key
+                        var elem = cat.Descendants()
+                            .FirstOrDefault(e => e.Name == parts[1]);
+
+                        if (elem != null)
+                            elem.Remove();
+                    }
+                }
+                else
+                    throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
             }
             else
-                throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
+                throw new IncompatibleXmlFormatException($"Format {_thisFormat} cannot be used from this version.");
+
         }
 
         public void DeleteSection(string section)
@@ -327,27 +365,13 @@ namespace ConfigAdapter.Xml
         {
             var result = new List<Setting>();
 
-            result.AddRange(_root.Elements()
+            if (_thisFormat is "A")
+            {
+                result.AddRange(_root.Elements()
                             .Where(e => e.Attribute("Key") != null)
                             .Select(e =>
                             {
                                 var key = e.Attribute("Key").Value;
-                                var value = e.FirstNode.ToString();
-                                var comment = e.PreviousNode?.NodeType is System.Xml.XmlNodeType.Comment 
-                                            ? (e.PreviousNode as XComment).Value
-                                            : null;
-
-                                return new Setting(key, value, comment);
-                            }));
-
-            _root.Descendants().Where(e => e.Attribute("Key") is null)
-                .ForEach(cat =>
-                {
-                    result.AddRange(cat.Elements()
-                            .Where(e => e.Attribute("Key") != null)
-                            .Select(e =>
-                            {
-                                var key = $"{cat.Name}:{e.Attribute("Key").Value}";
                                 var value = e.FirstNode.ToString();
                                 var comment = e.PreviousNode?.NodeType is System.Xml.XmlNodeType.Comment
                                             ? (e.PreviousNode as XComment).Value
@@ -355,7 +379,58 @@ namespace ConfigAdapter.Xml
 
                                 return new Setting(key, value, comment);
                             }));
-                });
+
+                _root.Descendants().Where(e => e.Attribute("Key") is null)
+                    .ForEach(cat =>
+                    {
+                        result.AddRange(cat.Elements()
+                                .Where(e => e.Attribute("Key") != null)
+                                .Select(e =>
+                                {
+                                    var key = $"{cat.Name}:{e.Attribute("Key").Value}";
+                                    var value = e.FirstNode.ToString();
+                                    var comment = e.PreviousNode?.NodeType is System.Xml.XmlNodeType.Comment
+                                                ? (e.PreviousNode as XComment).Value
+                                                : null;
+
+                                    return new Setting(key, value, comment);
+                                }));
+                    });
+            }
+            else if (_thisFormat is "CAv2")
+            {
+                result.AddRange(_root.Elements()
+                            .Where(e => e.HasElements is false)
+                            .Select(e =>
+                            {
+                                var key = e.Name.ToString();
+                                var value = e.Value;
+                                var comment = e.PreviousNode?.NodeType is System.Xml.XmlNodeType.Comment
+                                            ? (e.PreviousNode as XComment).Value
+                                            : null;
+
+                                return new Setting(key, value, comment);
+                            }));
+
+                _root.Descendants()
+                    .ForEach(cat =>
+                    {
+                        result.AddRange(cat.Elements()
+                                .Where(e => e.HasElements is false)
+                                .Select(e =>
+                                {
+                                    var key = $"{cat.Name}:{e.Name.ToString()}";
+                                    var value = e.Value;
+                                    var comment = e.PreviousNode?.NodeType is System.Xml.XmlNodeType.Comment
+                                                ? (e.PreviousNode as XComment).Value
+                                                : null;
+
+                                    return new Setting(key, value, comment);
+                                }));
+                    });
+            }
+            else
+                throw new IncompatibleXmlFormatException($"Format {_thisFormat} cannot be used from this version.");
 
             return result;
         }
@@ -370,22 +445,46 @@ namespace ConfigAdapter.Xml
         {
             var result = new Dictionary<string, string>();
 
-            if (section is "")
+            if (_thisFormat is "A")
             {
-                // Global section
-                var elems = _root.Elements()
-                    .Where(e => e.Attribute("Key") != null);
-                foreach (var elem in elems)
-                    result.Add(elem.Attribute("Key")?.Value, elem.Value);
+                if (section is "")
+                {
+                    // Global section
+                    var elems = _root.Elements()
+                        .Where(e => e.Attribute("Key") != null);
+                    foreach (var elem in elems)
+                        result.Add(elem.Attribute("Key")?.Value, elem.Value);
+                }
+                else
+                {
+                    // Specific section
+                    var elems = _root.Elements(section)
+                        .SelectMany(cat => cat.Elements("Setting"));
+                    foreach (var elem in elems)
+                        result.Add(elem.Attribute("Key")?.Value, elem.Value);
+                }
+            }
+            else if (_thisFormat is "CAv2")
+            {
+                if (section is "")
+                {
+                    // Global section
+                    var elems = _root.Elements()
+                        .Where(e => e.HasElements is false);
+                    foreach (var elem in elems)
+                        result.Add(elem.Name.ToString(), elem.Value);
+                }
+                else
+                {
+                    // Specific section
+                    var elems = _root.Elements(section)
+                        .SelectMany(cat => cat.Elements());
+                    foreach (var elem in elems)
+                        result.Add(elem.Name.ToString(), elem.Value);
+                }
             }
             else
-            {
-                // Specific section
-                var elems = _root.Elements(section)
-                    .SelectMany(cat => cat.Elements("Setting"));
-                foreach (var elem in elems)
-                    result.Add(elem.Attribute("Key")?.Value, elem.Value);
-            }
+                throw new IncompatibleXmlFormatException($"Format {_thisFormat} cannot be used from this version.");
 
             return result;
         }

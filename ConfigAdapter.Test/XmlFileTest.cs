@@ -291,6 +291,21 @@ namespace ConfigAdapterTest
         }
 
         [TestMethod]
+        public void TestSettingsInSectionNewFormat()
+        {
+            var config = XmlConfig.From(@"TestNewFormat.xml");
+            IDictionary<string, string> settings = null;
+
+            Action act = () => settings = config.SettingsIn("Categoria");
+            act.Should().NotThrow();
+
+            settings.Should().HaveCountGreaterOrEqualTo(2);
+            settings.Should().ContainKeys("SubClave", "Comentada");
+            settings.Should().ContainValue("1");
+            settings.Should().NotContainKeys("ClaveSinCategoria", "Doble");
+        }
+
+        [TestMethod]
         public void TestDeleteKey()
         {
             var config = XmlConfig.From(@"TestFile.xml");
