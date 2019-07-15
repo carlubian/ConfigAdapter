@@ -4,20 +4,21 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Id>ConfigAdapter.Xml</Id>
     <Title>ConfigAdapter.Xml</Title>
-    <Version>2.3.1</Version>
+    <Version>2.3.2</Version>
     <Authors>carlubian</Authors>
     <Owners>carlubian</Owners>
     <Company>carlubian</Company>
-    <PackageReleaseNotes>Fixes for new format.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add PackageLicenseExpression.</PackageReleaseNotes>
     <PackageIconUrl>http://carlubian.azurewebsites.net/images/icon-ConfigAdapterV2.png</PackageIconUrl>
     <Description>Provides an adapter to use .XML files in ConfigAdapter.</Description>
     <RepositoryUrl>https://www.github.com/carlubian/ConfigAdapter</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>configuration-files, dotnet-standard, dotnet</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConfigAdapter" Version="2.2.1" />
+    <PackageReference Include="ConfigAdapter" Version="2.2.2" />
   </ItemGroup>
 
 </Project>
