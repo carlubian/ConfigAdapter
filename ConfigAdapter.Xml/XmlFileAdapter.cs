@@ -293,6 +293,8 @@ namespace ConfigAdapter.Xml
 
                     if (elem != null)
                         elem.Remove();
+
+                    _root.Save(_file);
                 }
                 // Local key
                 else if (parts.Length is 2)
@@ -310,6 +312,8 @@ namespace ConfigAdapter.Xml
                         if (elem != null)
                             elem.Remove();
                     }
+
+                    _root.Save(_file);
                 }
                 else
                     throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
@@ -325,6 +329,8 @@ namespace ConfigAdapter.Xml
 
                     if (elem != null)
                         elem.Remove();
+
+                    _root.Save(_file);
                 }
                 // Local key
                 else if (parts.Length is 2)
@@ -342,6 +348,8 @@ namespace ConfigAdapter.Xml
                         if (elem != null)
                             elem.Remove();
                     }
+
+                    _root.Save(_file);
                 }
                 else
                     throw new InvalidKeyFormatException($"Key {key} has an incorrect format.");
@@ -359,6 +367,8 @@ namespace ConfigAdapter.Xml
 
             if (cat != null)
                 cat.Remove();
+
+            _root.Save(_file);
         }
 
         IList<Setting> ITransferable.ReadAll()

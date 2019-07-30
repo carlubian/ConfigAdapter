@@ -348,6 +348,21 @@ namespace ConfigAdapterTest
         }
 
         [TestMethod]
+        public void TestDeleteSectionNewFormat()
+        {
+            var config = XmlConfig.From(@"TestNewFormat.xml");
+
+            config.Write("SectionToDelete:Key1", "Foo");
+            config.Write("SectionToDelete:Key2", "Bar");
+
+            Action act = () => config.DeleteSection("SectionToDelete");
+            act.Should().NotThrow();
+
+            config.Read("SectionToDelete:Key1").Should().Be(null);
+            config.Read("SectionToDelete:Key2").Should().Be(null);
+        }
+
+        [TestMethod]
         public void TestIndexAccess()
         {
             var config = XmlConfig.From(@"TestFile.xml");
