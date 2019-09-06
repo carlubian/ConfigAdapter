@@ -212,15 +212,13 @@ namespace ConfigAdapterTest
         [TestMethod]
         public void TestNewPath()
         {
-            Action act = () => XmlConfig.From(@"Settings\TestFile.xml");
+            Action act = () => XmlConfig.From(@"TestFileNewPath.xml");
             act.Should().NotThrow();
 
-            var config = XmlConfig.From(@"Settings\TestFile.xml");
+            var config = XmlConfig.From(@"TestFileNewPath.xml");
             config.Write("Ajuste:Prueba", "Valor");
 
             config.Read("Ajuste:Prueba").Should().Be("Valor");
-
-            System.IO.Directory.Delete("Settings", true);
         }
 
         [TestMethod]
