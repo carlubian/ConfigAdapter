@@ -1,0 +1,30 @@
+name: .NET Core CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build ConfigAdapter
+      run: dotnet build ConfigAdapter/ConfigAdapter.csproj -f netstandard2.0
+    - name: Build ConfigAdapter.Xml
+      run: dotnet build ConfigAdapter.Xml/ConfigAdapter.Xml.csproj -f netstandard2.0
+    - name: Build ConfigAdapter.Ini
+      run: dotnet build ConfigAdapter.Ini/ConfigAdapter.Ini.csproj -f netstandard2.0
+    - name: Build ConfigAdapter.HJson
+      run: dotnet build ConfigAdapter.HJson/ConfigAdapter.HJson.csproj -f netstandard2.0
+    - name: Build test project
+      run: dotnet build ConfigAdapter.Test/ConfigAdapter.Test.csproj -f netcoreapp2.1
+    - name: Run unit tests
+      run: dotnet test ConfigAdapter.Test/ConfigAdapter.Test.csproj -f netcoreapp2.1
