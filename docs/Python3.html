@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>ConfigAdapter from Python 3</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/selawik" type="text/css" />
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/muli" type="text/css" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/flushing.css" rel="stylesheet">
+</head>
+
+<body class="future-3 grey-3-text">
+
+    <nav class="navbar navbar-expand-lg navbar-dark grey-4">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="Index.html">ConfigAdapter</a>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="mainNav">
+
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="Features.html">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Reference.html">Docs &amp; Reference</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Download.html">Download</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+    <!-- Encabezado -->
+<div class="jumbotron jumbotron-fluid grey-3">
+    <div class="row justify-content-center container-fluid">
+        <div class="col-sm-8">
+
+            <h2 class="future-3-text">Python 3</h2>
+            <p class="lead future-3-text">
+                Code examples for using ConfigAdapter from Python 3.
+            </p>
+            <hr class="my-4">
+
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
+
+        </div>
+    </div>
+</div>
+
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <h2>Source</h2>
+            <p class="card-text subtitle">
+                This is the reference implementation of ConfigAdapter.Xml
+                in Python 3. Other file formats are not available yet.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <pre class="prettyprint lang-python">import xml.etree.ElementTree as ET
+
+def From(path):
+    """Open an existing XML configuration file."""
+    tree = ET.parse(path);
+    root = tree.getroot();
+    return Config(path);
+
+class Config:
+    path = None;
+    tree = None;
+    root = None;
+
+    def __init__(self, path):
+        self.path = path;
+        self.tree = ET.parse(self.path);
+        self.root = self.tree.getroot();
+
+    def Read(self, key):
+        """Return the value of a setting."""
+        element = self.root;
+        fragments = key.split(":");
+        for fragment in fragments:
+            for tag in element:
+                if tag.tag == fragment:
+                    element = tag;
+                    break;
+        return element.text;
+
+    def Write(self, key, value):
+        """Create a new setting or modify the value of an existing one."""
+        element = self.root;
+        fragments = key.split(":");
+        for fragment in fragments:
+            existing = False;
+            for tag in element:
+                if tag.tag == fragment:
+                    element = tag;
+                    existing = True;
+                    break;
+            if existing == False:
+                element.append(ET.Element(fragment));
+                for tag in element:
+                    if tag.tag == fragment:
+                        element = tag;
+                        break;
+        element.text = str(value);
+        self.tree.write(self.path);</pre>
+            <p>
+                Note the following limitations in the current functionality:
+            </p>
+            <p>
+                <ul>
+                    <li>Reading or writing comments is not supported.</li>
+                    <li>This Python code can produce nested section more than
+                        one level deep. The resulting file may not be compatible
+                        with the main C# library.
+                    </li>
+                </ul>
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<!-- Panel de contenido claro -->
+<div class="jumbotron jumbotron-fluid my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <h2>Use the code</h2>
+            <p class="card-text subtitle">
+                Instruction on how to use the previous code.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <!-- Texto de la sección -->
+    <div class="row justify-content-center mt-5">
+        <div class="col-sm-8">
+
+            <p>
+                For organizational purposes, it is reccomended to put the code in its own
+                folder, like this: 
+                <span class="emphasis blue-3-text">Root/ConfigAdapter/XmlConfig.py</span>
+            </p>
+            <p>
+                Then, in your own code, import ConfigAdapter:
+            </p>
+            <pre class="prettyprint lang-python">import ConfigAdapter.XmlConfig as Config;</pre>
+            <p>
+                Now you can start using it with a similar syntax to that of the main ConfigAdapter:
+            </p>
+            <pre class="prettyprint lang-python">config = Config.From("ConfigFile.xml");
+
+value = config.Read("Section:SettingName");
+numeric = int(value);
+
+config.Write("Section:SettingName", 42);
+config.Write("Section:OtherSetting", "Value");</pre>
+
+        </div>
+    </div>
+</div>
+
+<!-- Panel de contenido oscuro -->
+<div class="jumbotron jumbotron-fluid grey-3 my-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <h2 class="future-3-text">You're all done!</h2>
+            <p class="card-text future-3-text">
+                Now you can interact with Xml configuration files
+                from Python 3 code.
+            </p>
+            <hr class="my-4">
+            <a class="btn blue-3 future-3-text btn-lg" href="Reference.html" role="button">Go back</a>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="page-footer font-small grey-4">
+
+        <div class="footer-copyright text-center future-3-text py-3">
+            Hello from Spain!
+        </div>
+
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/mdb.js"></script>
+
+</body>
+
+</html>
+
