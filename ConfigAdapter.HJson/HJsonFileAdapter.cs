@@ -17,13 +17,10 @@ namespace ConfigAdapter.HJson
     public class HJsonFileAdapter : IFileAdapter, ITransferable
     {
         private readonly string _file;
-        private WscJsonObject _content;
+        private JsonObject _content;
 
         public HJsonFileAdapter(string file)
         {
-            if (!file.EndsWith(".hjson"))
-                throw new InvalidFileFormatException(".hjson file extension required.");
-
             _file = file;
 
             try
@@ -34,7 +31,7 @@ namespace ConfigAdapter.HJson
             if (!File.Exists(file))
                 HjsonValue.Save(new JsonObject(), _file);
 
-            _content = (WscJsonObject)HjsonValue.Load(_file, new HjsonOptions
+            _content = HjsonValue.Load(_file, new HjsonOptions
             {
                 KeepWsc = true
             }).Qo();
@@ -79,7 +76,7 @@ namespace ConfigAdapter.HJson
                 {
                     RefreshFile();
 
-                    _content.Comments[parts[0]] = comment;
+                    //_content.Comments[parts[0]] = comment; Comment support temporarily removed
                 }
             }
             // Local key
@@ -97,9 +94,6 @@ namespace ConfigAdapter.HJson
                 if (comment != null)
                 {
                     RefreshFile();
-
-                    ((WscJsonObject)_content[parts[0]].Qo())
-                        .Comments[parts[1]] = comment;
                 }
             }
             else
@@ -154,7 +148,7 @@ namespace ConfigAdapter.HJson
             {
                 KeepWsc = true
             });
-            _content = (WscJsonObject)HjsonValue.Load(_file, new HjsonOptions
+            _content = HjsonValue.Load(_file, new HjsonOptions
             {
                 KeepWsc = true
             }).Qo();
@@ -168,7 +162,7 @@ namespace ConfigAdapter.HJson
             {
                 if (kvp.Value.JsonType is JsonType.String
                 || kvp.Value.JsonType is JsonType.Number)
-                    result.Add(new Setting(kvp.Key, kvp.Value.Qstr(), _content.Comments[kvp.Key]));
+                    result.Add(new Setting(kvp.Key, kvp.Value.Qstr(), null));
 
                 if (kvp.Value.JsonType is JsonType.Object)
                     kvp.Value.Qo().ToList().ForEach(ckvp =>

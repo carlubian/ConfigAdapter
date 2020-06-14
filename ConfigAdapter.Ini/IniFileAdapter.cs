@@ -24,9 +24,6 @@ namespace ConfigAdapter.Ini
 
         public IniFileAdapter(string file)
         {
-            if (!file.EndsWith(".ini"))
-                throw new InvalidFileFormatException(".ini file extension required.");
-
             _file = file;
 
             try

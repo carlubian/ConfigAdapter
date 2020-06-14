@@ -16,7 +16,8 @@ namespace ConfigAdapterTest
         {
             Action act = () => XmlConfig.From(@"path\to\invalid\file");
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
         }
 
         [TestMethod]
@@ -24,7 +25,8 @@ namespace ConfigAdapterTest
         {
             Action act = () => XmlConfig.From(@"path\to\invalid\format.pdf");
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
         }
 
         [TestMethod]
@@ -80,7 +82,8 @@ namespace ConfigAdapterTest
         {
             Action act = () => XmlConfig.From("TestFile.json");
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
         }
     }
 }

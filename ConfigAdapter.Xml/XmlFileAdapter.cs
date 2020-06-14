@@ -24,9 +24,6 @@ namespace ConfigAdapter.Xml
 
         public XmlFileAdapter(string file)
         {
-            if (!file.EndsWith(".xml"))
-                throw new InvalidFileFormatException(".xml file extension required.");
-
             _file = file;
 
             try

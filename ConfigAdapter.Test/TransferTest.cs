@@ -40,7 +40,8 @@ namespace ConfigAdapterTest
             var iniCio = IniConfig.From("TestFile.ini");
             Action act = () => iniCio.TransferTo(XmlConfig.From("Incorrecto"));
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
         }
 
         [TestMethod]
@@ -49,11 +50,13 @@ namespace ConfigAdapterTest
             var iniCio = IniConfig.From("TestFile.ini");
             Action act = () => iniCio.TransferTo(HJsonConfig.From("Incorrecto.json"));
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
 
             act = () => iniCio.TransferTo(XmlConfig.From("Incorrecto.txt"));
 
-            act.Should().Throw<InvalidFileFormatException>();
+            //act.Should().Throw<InvalidFileFormatException>(); New version allows any file format
+            act.Should().NotThrow();
         }
     }
 }
