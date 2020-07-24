@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Id>ConfigAdapter.Xml</Id>
     <Title>ConfigAdapter.Xml</Title>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <Authors>carlubian</Authors>
     <Owners>carlubian</Owners>
     <Company>carlubian</Company>
