@@ -10,4 +10,4 @@ Documentation and usage instructions for the ConfigAdapter library.
 The <strong>ConfigAdapter</strong> library allows different applications to read and write settings and configurations in a simple and direct way. 
 
 ## Documentation
-Check out the [Documentation website](https://carlubian.github.io/ConfigAdapter/Index.html) for more information on how to use ConfigAdapter.
+Check out the [Documentation website](https://carlubian.github.io/ConfigAdapter) for more information on how to use ConfigAdapter.
