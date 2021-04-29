@@ -19,7 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConfigAdapter" Version="2.2.2" />
+    <PackageReference Include="ConfigAdapter" Version="2.3.0" />
     <PackageReference Include="INIFileParserDotNetCore" Version="2.5.2" />
   </ItemGroup>
 
