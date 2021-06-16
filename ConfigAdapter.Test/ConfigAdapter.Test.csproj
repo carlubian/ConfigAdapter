@@ -22,9 +22,13 @@
     <ProjectReference Include="..\ConfigAdapter.HJson\ConfigAdapter.HJson.csproj" />
     <ProjectReference Include="..\ConfigAdapter.Ini\ConfigAdapter.Ini.csproj" />
     <ProjectReference Include="..\ConfigAdapter.Xml\ConfigAdapter.Xml.csproj" />
+    <ProjectReference Include="..\ConfigAdapter.Yaml\ConfigAdapter.Yaml.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestFile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestNewFormat.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

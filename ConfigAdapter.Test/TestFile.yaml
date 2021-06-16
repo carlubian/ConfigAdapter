@@ -1,0 +1,7 @@
+﻿GlobalSetting1: Global Value 1
+GlobalSetting2: 250
+Section1:
+  LocalSetting1: Local Value 1
+Section2:
+  LocalSetting1: Local Value 2
+  LocalSetting2: Local Value 3
