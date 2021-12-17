@@ -1,7 +1,31 @@
-﻿GlobalSetting1: Global Value 1
-GlobalSetting2: 250
-Section1:
-  LocalSetting1: Local Value 1
-Section2:
-  LocalSetting1: Local Value 2
-  LocalSetting2: Local Value 3
+﻿Configuration:
+  Metadata:
+    Format: "ConfigAdapter.Yaml.v4"
+  Content:
+    GlobalSetting1:
+      Value: "Global Value 1"
+      Comment: "Global comment 1"
+    GlobalSetting2:
+      Value: "Global Value 2"
+      Comment:
+    Sections:
+      - Section 1:
+          LocalSetting1:
+            Value: "Local Value 1"
+            Comment: "Local comment 1"
+          Sections:
+            - Section 1.1:
+                LocalSetting 1.1:
+                  Value: "Local Value 1.1"
+                  Comment: "Local comment 1.1"
+                LocalSetting 1.2:
+                  Value: "Local Value 1.2"
+                  Comment: "Local comment 1.2"
+            - Section 1.3:
+                LocalSetting 1.3:
+                  Values:
+                    - "Array value 1"
+                    - "Array value 2"
+                    - "Array value 3"
+                    - "Array value 4"
+                  Comment:

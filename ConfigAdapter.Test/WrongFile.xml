@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!-- Archivo de configuración de prueba -->
-<Configuration Format="B">
-  <Setting Key="ClaveSinCategoria">0</Setting>
-
-  <Category>
-    <Setting Key="SubClave">1</Setting>
-  </Category>
-</Configuration>
