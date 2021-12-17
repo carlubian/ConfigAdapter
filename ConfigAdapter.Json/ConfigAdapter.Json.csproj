@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFrameworks>net5.0; net6.0</TargetFrameworks>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <LangVersion>latest</LangVersion>
+	  <Id>ConfigAdapter.Json</Id>
+	  <Title>ConfigAdapter.Json</Title>
+	  <Version>4.0.0</Version>
+	  <Authors>carlubian</Authors>
+	  <Owners>carlubian</Owners>
+	  <Company>carlubian</Company>
+	  <PackageReleaseNotes>New version.</PackageReleaseNotes>
+	  <PackageIconUrl>http://carlubian.azurewebsites.net/images/icon-ConfigAdapterV2.png</PackageIconUrl>
+	  <Description>Provides an adapter to use .JSON files in ConfigAdapter.</Description>
+	  <RepositoryUrl>https://github.com/carlubian/ConfigAdapter</RepositoryUrl>
+	  <PackageProjectUrl>https://github.com/carlubian/ConfigAdapter</PackageProjectUrl>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <PackageTags>configuration-files, dotnet-core, dotnet</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ConfigAdapter.Core\ConfigAdapter.Core.csproj" />
+  </ItemGroup>
+
+</Project>
