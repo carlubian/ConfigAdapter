@@ -79,6 +79,37 @@ public static class ConfigurationUtils
         return RecursiveEnumeration(section, remaining);
     }
 
+    public static void Delete(this ConfigAdapterFile file, string key)
+    {
+        if (key.Contains(':'))
+        {
+            // Nested file or section
+            var (sctName, remaining) = IterateSettingKey(key);
+            var section = file.Sections.FirstOrDefault(s => s.Name == sctName);
+
+            RecursiveDeletion(section, remaining);
+            if (section is not null && section.Settings.Count is 0 && section.Nested.Count is 0)
+                file.Sections.Remove(section);
+        }
+        else
+        {
+            // Local file or section
+            if (file.Sections.Any(s => s.Name == key))
+            {
+                var toRemove = file.Sections.First(s => s.Name == key);
+                file.Sections.Remove(toRemove);
+            }
+            else
+            {
+                var global = file.Sections.Single(s => s.Name is "_Global");
+                var toDelete = global.Settings.FirstOrDefault(s => s.Name == key);
+
+                if (toDelete is not null)
+                    global.Settings.Remove(toDelete);
+            }
+        }
+    }
+
     // ---------- Private utility methods ---------- \\
 
     private static ConfigAdapterSetting? RecursiveRetrieval(ConfigAdapterSection? s, string key)
@@ -147,6 +178,39 @@ public static class ConfigurationUtils
             // Target is just one section deep
             var s = section.Nested.FirstOrDefault(s => s.Name == sectionName);
             return RecursiveEnumeration(s, string.Empty);
+        }
+    }
+
+    private static void RecursiveDeletion(ConfigAdapterSection? section, string sectionName)
+    {
+        if (section is null)
+            return;
+
+        if (sectionName.Contains(':'))
+        {
+            // Nested file or section
+            var (sctName, remaining) = IterateSettingKey(sectionName);
+            var sct = section.Nested.FirstOrDefault(s => s.Name == sctName);
+
+            RecursiveDeletion(sct, remaining);
+            if (sct is not null && sct.Settings.Count is 0 && sct.Nested.Count is 0)
+                section.Nested.Remove(sct);
+        }
+        else
+        {
+            // Local file or section
+            if (section.Nested.Any(s => s.Name == sectionName))
+            {
+                var toRemove = section.Nested.First(s => s.Name == sectionName);
+                section.Nested.Remove(toRemove);
+            }
+            else
+            {
+                var toDelete = section.Settings.FirstOrDefault(s => s.Name == sectionName);
+
+                if (toDelete is not null)
+                    section.Settings.Remove(toDelete);
+            }
         }
     }
 

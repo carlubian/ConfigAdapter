@@ -55,6 +55,14 @@ public class XmlConfigurationProvider : IConfigurationProvider
         _file.Insert(key, value, comment);
     }
 
+    public void Delete(string key)
+    {
+        if (_file is null)
+            throw new InconsistentStateException();
+
+        _file.Delete(key);
+    }
+
     public void Persist()
     {
         if (_file is null)

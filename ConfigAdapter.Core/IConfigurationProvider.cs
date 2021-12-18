@@ -8,6 +8,7 @@ public interface IConfigurationProvider : IDisposable
     void Store(ConfigAdapterSetting setting);
     void Store(string key, ConfigAdapterValue value, string? comment = null);
     ConfigAdapterSetting? Retrieve(string key);
+    void Delete(string key);
     IEnumerable<ConfigAdapterSetting> Enumerate(string? section = null);
     void Persist();
 }
