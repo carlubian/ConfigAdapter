@@ -8,6 +8,7 @@ namespace ConfigAdapter;
 [ConfigurationProvider]
 public class XmlConfigurationProvider : IConfigurationProvider
 {
+    [ConfigurationClassModel]
     private ConfigAdapterFile? _file;
     internal string _path = string.Empty;
 
