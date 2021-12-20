@@ -1,14 +1,13 @@
 ﻿using ConfigAdapter.Core;
 using ConfigAdapter.Core.Exceptions;
 using ConfigAdapter.Core.Model;
-using ConfigAdapter.Xml;
+using ConfigAdapter.Ini;
 
 namespace ConfigAdapter;
 
 [ConfigurationProvider]
-public class XmlConfigurationProvider : IConfigurationProvider
+public class IniConfigurationProvider : IConfigurationProvider
 {
-    [ConfigurationClassModel]
     private ConfigAdapterFile? _file;
     internal string _path = string.Empty;
 
@@ -17,11 +16,11 @@ public class XmlConfigurationProvider : IConfigurationProvider
         _path = path;
 
         if (File.Exists(_path))
-            _file = XmlFileParser.ParseFile(_path);
+            _file = IniFileParser.ParseFile(_path);
         else
             _file = new()
             {
-                FileExtension = "XML",
+                FileExtension = "INI",
                 FileName = new FileInfo(_path).Name,
                 Sections = new List<ConfigAdapterSection>()
             };
@@ -69,7 +68,7 @@ public class XmlConfigurationProvider : IConfigurationProvider
         if (_file is null)
             throw new InconsistentStateException();
 
-        XmlFileParser.PersistFile(_file, _path);
+        IniFileParser.PersistFile(_file, _path);
     }
 
     public void Dispose()
@@ -80,6 +79,6 @@ public class XmlConfigurationProvider : IConfigurationProvider
     [ConfigurationInitializer]
     public static void RegisterProvider()
     {
-        Configuration.RegisterProvider("XML", typeof(XmlConfigurationProvider));
+        Configuration.RegisterProvider("INI", typeof(IniConfigurationProvider));
     }
 }

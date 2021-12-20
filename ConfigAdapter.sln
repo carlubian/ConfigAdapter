@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Xml", "Config
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Yaml", "ConfigAdapter.Yaml\ConfigAdapter.Yaml.csproj", "{9C26CD61-2EE0-408D-8963-D68923F551A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigAdapter.Json", "ConfigAdapter.Json\ConfigAdapter.Json.csproj", "{CD16DD83-CC8E-4441-9A16-C9631A85786A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Json", "ConfigAdapter.Json\ConfigAdapter.Json.csproj", "{CD16DD83-CC8E-4441-9A16-C9631A85786A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigAdapter.Ini", "ConfigAdapter.Ini\ConfigAdapter.Ini.csproj", "{3CC035C8-357E-4846-87E6-A7A5913F0F62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{CD16DD83-CC8E-4441-9A16-C9631A85786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD16DD83-CC8E-4441-9A16-C9631A85786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD16DD83-CC8E-4441-9A16-C9631A85786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC035C8-357E-4846-87E6-A7A5913F0F62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC035C8-357E-4846-87E6-A7A5913F0F62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC035C8-357E-4846-87E6-A7A5913F0F62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC035C8-357E-4846-87E6-A7A5913F0F62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

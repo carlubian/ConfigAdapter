@@ -59,6 +59,6 @@ internal class MockConfigurationProvider : IConfigurationProvider
 
     public void Delete(string key)
     {
-        throw new System.NotImplementedException();
+        
     }
 }

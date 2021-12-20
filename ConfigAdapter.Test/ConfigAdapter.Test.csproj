@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConfigAdapter.Core\ConfigAdapter.Core.csproj" />
+    <ProjectReference Include="..\ConfigAdapter.Ini\ConfigAdapter.Ini.csproj" />
     <ProjectReference Include="..\ConfigAdapter.Json\ConfigAdapter.Json.csproj" />
     <ProjectReference Include="..\ConfigAdapter.Xml\ConfigAdapter.Xml.csproj" />
     <ProjectReference Include="..\ConfigAdapter.Yaml\ConfigAdapter.Yaml.csproj" />

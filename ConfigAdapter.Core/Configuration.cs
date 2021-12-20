@@ -41,6 +41,22 @@ public static class Configuration
         return instance;
     }
 
+    public static IConfigurationProvider Migrate(IConfigurationProvider source, string path)
+    {
+        var fileFormat = new FileInfo(path).Extension.Replace(".", "");
+        if (!HasProvider(fileFormat))
+            throw new NoProviderAvailableException();
+
+        var target = From(path);
+        var targetFile = target.GetType().GetRuntimeFields()
+            .FirstOrDefault(f => f.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationClassModelAttribute)));
+        var sourceFile = source.GetType().GetRuntimeFields()
+            .FirstOrDefault(f => f.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationClassModelAttribute)));
+
+        targetFile.SetValue(target, sourceFile.GetValue(source));
+        return target;
+    }
+
     static Configuration()
     {
         var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
