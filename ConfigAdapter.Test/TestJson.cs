@@ -179,4 +179,71 @@ public class TestJson
         setting.Comment.Should().BeNull();
 
     }
+
+    [TestMethod]
+    public void TestDeleteStuff()
+    {
+        JsonConfigurationProvider.RegisterProvider();
+        var tree = Configuration.From("TestFile.json");
+
+        // Delete a global setting
+        tree.Store("ToDelete Global", "Fake value");
+        tree.Delete("ToDelete Global");
+
+        tree.Enumerate().Should().NotBeNullOrEmpty()
+            .And.HaveCount(2);
+        tree.Enumerate("Section 1:Section 1.1").Should().NotBeNull()
+            .And.HaveCount(2);
+
+        // Delete a 1-deep setting
+        tree.Store("Test section:Setting 1", "Value");
+        tree.Store("Test section:Setting 2", "Value");
+        tree.Delete("Test section:Setting 1");
+
+        tree.Enumerate("Test section").Should().NotBeNullOrEmpty()
+            .And.HaveCount(1);
+        tree.Enumerate().Should().NotBeNullOrEmpty()
+            .And.HaveCount(2);
+        tree.Enumerate("Section 1:Section 1.1").Should().NotBeNull()
+            .And.HaveCount(2);
+
+        // Delete a 1-deep section
+        tree.Store("Test section:Setting 3", "Value");
+        tree.Delete("Test section");
+
+        tree.Enumerate("Test section").Should().BeEmpty();
+        tree.Enumerate().Should().NotBeNullOrEmpty()
+            .And.HaveCount(2);
+        tree.Enumerate("Section 1:Section 1.1").Should().NotBeNull()
+            .And.HaveCount(2);
+
+        // Delete a 2-deep setting
+        tree.Store("Test section:Setting 1", "Value");
+        tree.Store("Test section:Subsection:Setting 2", "Value");
+        tree.Store("Test section:Subsection:Setting 3", "Value");
+        tree.Delete("Test section:Subsection:Setting 2");
+
+        tree.Enumerate().Should().NotBeNullOrEmpty()
+            .And.HaveCount(2);
+        tree.Enumerate("Section 1:Section 1.1").Should().NotBeNull()
+            .And.HaveCount(2);
+        tree.Enumerate("Test section:Subsection").Should().NotBeNull()
+            .And.HaveCount(1);
+        tree.Enumerate("Test section").Should().NotBeNull()
+            .And.HaveCount(1);
+
+        // Delete a 2-deep section
+        tree.Store("Test section 2:Setting 1", "Value");
+        tree.Store("Test section 2:Subsection:Setting 2", "Value");
+        tree.Store("Test section 2:Subsection:Setting 3", "Value");
+        tree.Delete("Test section 2:Subsection");
+
+        tree.Enumerate().Should().NotBeNullOrEmpty()
+            .And.HaveCount(2);
+        tree.Enumerate("Section 1:Section 1.1").Should().NotBeNull()
+            .And.HaveCount(2);
+        tree.Enumerate("Test section 2:Subsection").Should().BeEmpty();
+        tree.Enumerate("Test section 2").Should().NotBeNull()
+            .And.HaveCount(1);
+    }
 }
