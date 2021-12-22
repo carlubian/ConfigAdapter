@@ -27,27 +27,27 @@ internal class IniFileParser
         result.Sections.Add(PopulateGlobalSettings(document));
 
         // Fill sections
-        //var contentNode = FindContentNode(document);
-        //foreach (var child in contentNode.Elements())
-        //{
-        //    if (child.Name == "Section")
-        //        result.Sections.Add(PopulateSection(child));
-        //}
+        foreach (var child in document.Sections)
+        {
+            if (child.SectionName is not "_Global" && child.SectionName is not "Metadata")
+                PopulateSection(result, child);
+        }
 
         return result;
     }
 
     internal static void PersistFile(ConfigAdapterFile root, string path)
     {
-        //var document = new XElement("Configuration");
-        //CreateFramework(document);
+        var document = new IniData();
+        CreateFramework(document);
 
-        //PersistGlobalSettings(document, root);
+        PersistGlobalSettings(document, root);
 
-        //foreach (var section in root.Sections)
-        //    PersistLocalSection(document.Elements().Single(e => e.Name == "Content"), section);
+        foreach (var section in root.Sections)
+            PersistLocalSection(document, section);
 
-        //document.Save(path);
+        var newFile = document.ToString();
+        File.WriteAllText(path, newFile);
     }
 
     private static bool HasValidFormat(IniData document)
@@ -84,22 +84,29 @@ internal class IniFileParser
 
     private static ConfigAdapterSetting FormSetting(SectionData section, KeyData key)
     {
-        var keyRoot = key.KeyName.Split('.').First();
+        var keyRoot = string.Join('.', key.KeyName.Split('.').Reverse().Skip(1).Reverse());
 
-        if (node.Elements().Any(e => e.Name == "Values"))
+        if (section.Keys.Any(k => k.KeyName.StartsWith($"{keyRoot}.Values")))
         {
             // Node contains an ArrayValue
-            var name = node.Elements().First().Value;
-            var values = node.Elements().Skip(1).First().Elements();
-            string? comment = node.Elements().Skip(2).First().Value;
+            var name = keyRoot;
+            string? comment = section.Keys.First(k => k.KeyName == $"{keyRoot}.Comment").Value;
 
             if (string.IsNullOrWhiteSpace(comment))
                 comment = null;
 
             var array = new List<string>();
 
-            foreach (var value in values)
-                array.Add(value.Value);
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                if (section.Keys.Any(k => k.KeyName.StartsWith($"{keyRoot}.Values.{i}")))
+                {
+                    var value = section.Keys.First(k => k.KeyName.StartsWith($"{keyRoot}.Values.{i}")).Value;
+                    array.Add(value);
+                }
+                else
+                    break;
+            }
 
             return new ConfigAdapterSetting()
             {
@@ -108,12 +115,12 @@ internal class IniFileParser
                 Comment = comment
             };
         }
-        else if (node.Elements().Any(e => e.Name == "Value"))
+        else if (section.Keys.Any(k => k.KeyName == $"{keyRoot}.Value"))
         {
             // Node contains a StringValue
-            var name = node.Elements().First().Value;
-            var value = node.Elements().Skip(1).First().Value;
-            string? comment = node.Elements().Skip(2).First().Value;
+            var name = keyRoot;
+            var value = section.Keys.First(k => k.KeyName == $"{keyRoot}.Value").Value;
+            string? comment = section.Keys.First(k => k.KeyName == $"{keyRoot}.Comment").Value;
 
             if (string.IsNullOrWhiteSpace(comment))
                 comment = null;
@@ -128,8 +135,8 @@ internal class IniFileParser
         else
         {
             // Node contains an EmptyValue
-            var name = node.Elements().First().Value;
-            string? comment = node.Elements().Skip(1).First().Value;
+            var name = keyRoot;
+            string? comment = section.Keys.First(k => k.KeyName == $"{keyRoot}.Comment").Value;
 
             if (string.IsNullOrWhiteSpace(comment))
                 comment = null;
@@ -141,5 +148,91 @@ internal class IniFileParser
                 Comment = comment
             };
         }
+    }
+
+    private static void PopulateSection(ConfigAdapterFile file, SectionData section)
+    {
+        /**
+         * Hacky way to populate the model tree:
+         * No need to recurse and split the sections, as that logic
+         * is already implemented in the utility "insert" method.
+         * 
+         * It will create all the hierarchy and link sections together.
+         */
+
+        foreach (var key in section.Keys.Where(k => k.KeyName.EndsWith(".Comment")))
+        {
+            var setting = FormSetting(section, key);
+            file.Insert($"{section.SectionName}:{setting.Name}", setting.Value, setting.Comment);
+        }
+    }
+
+    private static void CreateFramework(IniData document)
+    {
+        document.Sections.AddSection("Metadata");
+        document.Sections.Single().Keys.AddKey("Format", "ConfigAdapter.Ini.v4");
+    }
+
+    private static void PersistGlobalSettings(IniData document, ConfigAdapterFile file)
+    {
+        var globalSettings = file.Sections.Single(s => s.Name == "_Global").Settings;
+        document.Sections.AddSection("_Global");
+        var section = document.Sections.Single(s => s.SectionName is "_Global");
+
+        foreach (var globalSetting in globalSettings)
+            FormSetting(section, globalSetting);
+    }
+
+    private static void PersistLocalSection(IniData document, ConfigAdapterSection section)
+    {
+        if (section.Name is "_Global" || section.Name is "Metadata")
+            return;
+
+        document.Sections.AddSection(section.Name);
+        var model = document.Sections.Single(s => s.SectionName == section.Name);
+
+        foreach (var setting in section.Settings)
+            FormSetting(model, setting);
+
+        foreach (var nested in section.Nested)
+        {
+            nested.Name = $"{section.Name}:{nested.Name}";
+            PersistLocalSection(document, nested);
+        }
+    }
+
+    private static void FormSetting(SectionData section, ConfigAdapterSetting s)
+    {
+        switch (s.Value.TypeHint)
+        {
+            case "string":
+                FormStringValue(section, s);
+                break;
+            case "array":
+                FormArrayValue(section, s);
+                break;
+            default:
+                FormEmptyValue(section, s);
+                break;
+        };
+    }
+
+    private static void FormArrayValue(SectionData section, ConfigAdapterSetting s)
+    {
+        for (int i = 0; i < ((List<string>)s.Value).Count; i++)
+            section.Keys.AddKey($"{s.Name}.Values.{i}", ((List<string>)s.Value)[i]);
+
+        section.Keys.AddKey($"{s.Name}.Comment", s.Comment);
+    }
+
+    private static void FormStringValue(SectionData section, ConfigAdapterSetting s)
+    {
+        section.Keys.AddKey($"{s.Name}.Value", (string)s.Value);
+        section.Keys.AddKey($"{s.Name}.Comment", s.Comment);
+    }
+
+    private static void FormEmptyValue(SectionData section, ConfigAdapterSetting s)
+    {
+        section.Keys.AddKey($"{s.Name}.Comment", s.Comment);
     }
 }
