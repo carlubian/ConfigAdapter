@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Yaml", "Confi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Json", "ConfigAdapter.Json\ConfigAdapter.Json.csproj", "{CD16DD83-CC8E-4441-9A16-C9631A85786A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigAdapter.Ini", "ConfigAdapter.Ini\ConfigAdapter.Ini.csproj", "{3CC035C8-357E-4846-87E6-A7A5913F0F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConfigAdapter.Ini", "ConfigAdapter.Ini\ConfigAdapter.Ini.csproj", "{3CC035C8-357E-4846-87E6-A7A5913F0F62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

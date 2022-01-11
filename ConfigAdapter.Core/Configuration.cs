@@ -57,19 +57,19 @@ public static class Configuration
         return target;
     }
 
-    static Configuration()
-    {
-        var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
+    //static Configuration()
+    //{
+    //    var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
 
-        foreach (var assemblyName in assemblies)
-        {
-            var assembly = Assembly.Load(assemblyName);
-            var providers = assembly.GetTypes().Where(t => t.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationProviderAttribute)));
-            foreach (var provider in providers)
-            {
-                var initializer = provider.GetRuntimeMethods().FirstOrDefault(m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationInitializerAttribute)));
-                initializer?.Invoke(null, null);
-            }
-        }
-    }
+    //    foreach (var assemblyName in assemblies)
+    //    {
+    //        var assembly = Assembly.Load(assemblyName);
+    //        var providers = assembly.GetTypes().Where(t => t.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationProviderAttribute)));
+    //        foreach (var provider in providers)
+    //        {
+    //            var initializer = provider.GetRuntimeMethods().FirstOrDefault(m => m.CustomAttributes.Any(a => a.AttributeType == typeof(ConfigurationInitializerAttribute)));
+    //            initializer?.Invoke(null, null);
+    //        }
+    //    }
+    //}
 }
