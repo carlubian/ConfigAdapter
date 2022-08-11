@@ -15,15 +15,15 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.103
+        dotnet-version: 6.0.100
     - name: Build ConfigAdapter
-      run: dotnet build ConfigAdapter/ConfigAdapter.csproj
+      run: dotnet build ConfigAdapter.Core/ConfigAdapter.Core.csproj
     - name: Build ConfigAdapter.Xml
       run: dotnet build ConfigAdapter.Xml/ConfigAdapter.Xml.csproj
     - name: Build ConfigAdapter.Ini
       run: dotnet build ConfigAdapter.Ini/ConfigAdapter.Ini.csproj
     - name: Build ConfigAdapter.HJson
-      run: dotnet build ConfigAdapter.HJson/ConfigAdapter.HJson.csproj
+      run: dotnet build ConfigAdapter.Json/ConfigAdapter.Json.csproj
     - name: Build test project
       run: dotnet build ConfigAdapter.Test/ConfigAdapter.Test.csproj
     - name: Run unit tests

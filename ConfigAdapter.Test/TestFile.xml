@@ -1,21 +1,51 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!-- Archivo de configuración de prueba -->
-<Configuration Format="A">
-  <Setting Key="ClaveSinCategoria">0</Setting>
-
-  <Categoria>
-    <Setting Key="SubClave">1</Setting>
-    <!--Comentario original-->
-    <Setting Key="Comentada">True</Setting>
-  </Categoria>
-
-  <Tipos>
-    <!--Tipo entero-->
-    <Setting Key="Entero">1</Setting>
-    <Setting Key="Largo">1</Setting>
-    <Setting Key="Doble">1,5</Setting>
-    <Setting Key="Flotante">1,5</Setting>
-    <Setting Key="Caracter">h</Setting>
-    <Setting Key="Booleano">False</Setting>
-  </Tipos>
+﻿<Configuration>
+  <Metadata>
+    <Format>ConfigAdapter.Xml.v4</Format>
+  </Metadata>
+  <Content>
+    <Setting>
+      <Key>GlobalSetting1</Key>
+      <Value>Global Value 1</Value>
+      <Comment>Global comment 1</Comment>
+    </Setting>
+    <Setting>
+      <Key>GlobalSetting2</Key>
+      <Value>Global Value 2</Value>
+      <Comment></Comment>
+    </Setting>
+    <Section>
+      <Name>Section 1</Name>
+      <Setting>
+        <Key>LocalSetting1</Key>
+        <Value>Local Value 1</Value>
+        <Comment>Local comment 1</Comment>
+      </Setting>
+      <Section>
+        <Name>Section 1.1</Name>
+        <Setting>
+          <Key>LocalSetting1.1</Key>
+          <Value>Local Value 1.1</Value>
+          <Comment>Local comment 1.1</Comment>
+        </Setting>
+        <Setting>
+          <Key>LocalSetting1.2</Key>
+          <Value>Local Value 1.2</Value>
+          <Comment>Local comment 1.2</Comment>
+        </Setting>
+      </Section>
+      <Section>
+        <Name>Section 1.3</Name>
+        <Setting>
+          <Key>LocalSetting1.3</Key>
+          <Values>
+            <Value>Array value 1</Value>
+            <Value>Array value 2</Value>
+            <Value>Array value 3</Value>
+            <Value>Array value 4</Value>
+          </Values>
+          <Comment></Comment>
+        </Setting>
+      </Section>
+    </Section>
+  </Content>
 </Configuration>
