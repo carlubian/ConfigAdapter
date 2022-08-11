@@ -8,7 +8,6 @@ internal class MockConfigurationProvider : IConfigurationProvider
 {
     public void Open(string path)
     {
-        
     }
 
     public IEnumerable<ConfigAdapterSetting> Enumerate(string? section = null)
@@ -39,26 +38,21 @@ internal class MockConfigurationProvider : IConfigurationProvider
 
     public void Store(ConfigAdapterSetting setting)
     {
-            
     }
 
     public void Store(string key, ConfigAdapterValue value, string? comment = null)
     {
-            
     }
 
     public void Dispose()
     {
-        
     }
 
     public void Persist()
     {
-        
     }
 
     public void Delete(string key)
     {
-        
     }
 }

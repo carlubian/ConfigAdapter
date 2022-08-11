@@ -230,7 +230,7 @@ namespace ConfigAdapter.Xml
                 default:
                     FormEmptyValue(setting);
                     break;
-            };
+            }
             setting.Add(new XElement("Comment", s.Comment ?? string.Empty));
 
             return setting;

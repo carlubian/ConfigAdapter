@@ -214,7 +214,7 @@ internal class IniFileParser
             default:
                 FormEmptyValue(section, s);
                 break;
-        };
+        }
     }
 
     private static void FormArrayValue(SectionData section, ConfigAdapterSetting s)

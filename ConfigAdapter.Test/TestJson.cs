@@ -177,7 +177,6 @@ public class TestJson
         value = setting.Value;
         value.Should().Be("Local value 327");
         setting.Comment.Should().BeNull();
-
     }
 
     [TestMethod]

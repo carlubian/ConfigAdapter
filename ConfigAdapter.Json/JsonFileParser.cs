@@ -265,7 +265,6 @@ internal static class JsonFileParser
             "array" => FormArrayValue(s),
             _ => FormEmptyValue(s),
         };
-        ;
     }
 
     private static IDictionary<string, object?> FormArrayValue(ConfigAdapterSetting s)

@@ -265,7 +265,6 @@ internal static class YamlFileParser
             "array" => FormArrayValue(s),
             _ => FormEmptyValue(s),
         };
-        ;
     }
 
     private static IDictionary<string, object?> FormArrayValue(ConfigAdapterSetting s)
