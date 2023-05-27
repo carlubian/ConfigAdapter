@@ -11,9 +11,6 @@ public class TestMigrations
     [TestMethod]
     public void MigrateXmlToYaml()
     {
-        XmlConfigurationProvider.RegisterProvider();
-        YamlConfigurationProvider.RegisterProvider();
-
         var tree = Configuration.From("TestFile.xml");
         var migration = Configuration.Migrate(tree, "Migrated.yaml");
 
@@ -57,9 +54,6 @@ public class TestMigrations
     [TestMethod]
     public void MigrateJsonToXml()
     {
-        XmlConfigurationProvider.RegisterProvider();
-        JsonConfigurationProvider.RegisterProvider();
-
         var tree = Configuration.From("TestFile.json");
         var migration = Configuration.Migrate(tree, "Migrated.xml");
 
@@ -103,9 +97,6 @@ public class TestMigrations
     [TestMethod]
     public void MigrateYamlToJson()
     {
-        JsonConfigurationProvider.RegisterProvider();
-        YamlConfigurationProvider.RegisterProvider();
-
         var tree = Configuration.From("TestFile.yaml");
         var migration = Configuration.Migrate(tree, "Migrated.json");
 

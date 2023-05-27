@@ -15,7 +15,6 @@ public class TestYaml
     [TestMethod]
     public void TestParseFile()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         var globalSetting1 = tree.Retrieve("GlobalSetting1");
@@ -28,7 +27,6 @@ public class TestYaml
     [TestMethod]
     public void TestParseSection()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         tree.Enumerate("Section 1").Should().NotBeNull()
@@ -57,7 +55,6 @@ public class TestYaml
     [TestMethod]
     public void TestParseArray()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         var localSetting = tree.Retrieve("Section 1:Section 1.3:LocalSetting 1.3");
@@ -71,7 +68,6 @@ public class TestYaml
     [TestMethod]
     public void TestExtensionMethods()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         // String retrieved as string
@@ -99,7 +95,6 @@ public class TestYaml
     [TestMethod]
     public void TestNonexistantKeys()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         Action act = () => tree.Enumerate("NotExists:Also missing");
@@ -118,7 +113,6 @@ public class TestYaml
     [TestMethod]
     public void TestExceptionEvents()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         var localSetting = tree.Retrieve("Section 1:LocalSetting1");
@@ -132,7 +126,6 @@ public class TestYaml
     {
         // Write to new file
         File.Copy("TestFile.yaml", "TestFile2.yaml", true);
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile2.yaml");
 
         tree.Store("Global Setting 3", "Global Value 3");
@@ -182,7 +175,6 @@ public class TestYaml
     [TestMethod]
     public void TestDeleteStuff()
     {
-        YamlConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.yaml");
 
         // Delete a global setting

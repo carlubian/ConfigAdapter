@@ -15,7 +15,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestParseFile()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             var globalSetting1 = tree.Retrieve("GlobalSetting1");
@@ -28,7 +27,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestParseSection()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             tree.Enumerate("Section 1").Should().NotBeNull()
@@ -57,7 +55,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestParseArray()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             var localSetting = tree.Retrieve("Section 1:Section 1.3:LocalSetting1.3");
@@ -71,7 +68,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestExtensionMethods()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             // String retrieved as string
@@ -99,7 +95,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestNonexistantKeys()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             Action act = () => tree.Enumerate("NotExists:Also missing");
@@ -118,7 +113,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestExceptionEvents()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             var localSetting = tree.Retrieve("Section 1:LocalSetting1");
@@ -132,7 +126,6 @@ namespace ConfigAdapter.Test
         {
             // Write to new file
             File.Copy("TestFile.xml", "TestFile2.xml", true);
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile2.xml");
 
             tree.Store("Global Setting 3", "Global Value 3");
@@ -182,7 +175,6 @@ namespace ConfigAdapter.Test
         [TestMethod]
         public void TestDeleteStuff()
         {
-            XmlConfigurationProvider.RegisterProvider();
             var tree = Configuration.From("TestFile.xml");
 
             // Delete a global setting

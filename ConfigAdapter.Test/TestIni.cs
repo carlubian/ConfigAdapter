@@ -15,7 +15,6 @@ public class TestIni
     [TestMethod]
     public void TestParseFile()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         var globalSetting1 = tree.Retrieve("GlobalSetting1");
@@ -28,7 +27,6 @@ public class TestIni
     [TestMethod]
     public void TestParseSection()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         tree.Enumerate("Section 1").Should().NotBeNull()
@@ -57,7 +55,6 @@ public class TestIni
     [TestMethod]
     public void TestParseArray()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         var localSetting = tree.Retrieve("Section 1:Section 1.3:LocalSetting1.3");
@@ -71,7 +68,6 @@ public class TestIni
     [TestMethod]
     public void TestExtensionMethods()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         // String retrieved as string
@@ -99,7 +95,6 @@ public class TestIni
     [TestMethod]
     public void TestNonexistantKeys()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         Action act = () => tree.Enumerate("NotExists:Also missing");
@@ -118,7 +113,6 @@ public class TestIni
     [TestMethod]
     public void TestExceptionEvents()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         var localSetting = tree.Retrieve("Section 1:LocalSetting1");
@@ -132,7 +126,6 @@ public class TestIni
     {
         // Write to new file
         File.Copy("TestFile.ini", "TestFile2.ini", true);
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile2.ini");
 
         tree.Store("Global Setting 3", "Global Value 3");
@@ -182,7 +175,6 @@ public class TestIni
     [TestMethod]
     public void TestDeleteStuff()
     {
-        IniConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.ini");
 
         // Delete a global setting

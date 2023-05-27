@@ -15,7 +15,6 @@ public class TestJson
     [TestMethod]
     public void TestParseFile()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         var globalSetting1 = tree.Retrieve("GlobalSetting1");
@@ -28,7 +27,6 @@ public class TestJson
     [TestMethod]
     public void TestParseSection()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         tree.Enumerate("Section 1").Should().NotBeNull()
@@ -57,7 +55,6 @@ public class TestJson
     [TestMethod]
     public void TestParseArray()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         var localSetting = tree.Retrieve("Section 1:Section 1.3:LocalSetting1.3");
@@ -71,7 +68,6 @@ public class TestJson
     [TestMethod]
     public void TestExtensionMethods()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         // String retrieved as string
@@ -99,7 +95,6 @@ public class TestJson
     [TestMethod]
     public void TestNonexistantKeys()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         Action act = () => tree.Enumerate("NotExists:Also missing");
@@ -118,7 +113,6 @@ public class TestJson
     [TestMethod]
     public void TestExceptionEvents()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         var localSetting = tree.Retrieve("Section 1:LocalSetting1");
@@ -132,7 +126,6 @@ public class TestJson
     {
         // Write to new file
         File.Copy("TestFile.json", "TestFile2.json", true);
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile2.json");
 
         tree.Store("Global Setting 3", "Global Value 3");
@@ -182,7 +175,6 @@ public class TestJson
     [TestMethod]
     public void TestDeleteStuff()
     {
-        JsonConfigurationProvider.RegisterProvider();
         var tree = Configuration.From("TestFile.json");
 
         // Delete a global setting
